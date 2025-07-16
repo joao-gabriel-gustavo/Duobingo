@@ -1,0 +1,45 @@
+@model ExcluirCategoriaViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Exclusão de Categoria";
+}
+
+<hr />
+
+<div class="row justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card bg-dark text-white rounded-4 border-0">
+            <div class="card-body p-md-5">
+                <h3>Formulário de Exclusão</h3>
+
+                @if (Model.QuantidadeDespesas > 0)
+                {
+                    <div class="alert alert-danger mt-4">
+                        <strong>Não é possível excluir esta categoria!</strong><br>
+                        Esta categoria possui @Model.QuantidadeDespesas despesa(s) vinculada(s). 
+                        Para excluir esta categoria, primeiro remova ou altere a categoria das despesas relacionadas.
+                    </div>
+                    
+                    <p class="mt-4">Categoria: "<strong>@Model.Titulo</strong>"</p>
+                    <p>Quantidade de Despesas: <strong>@Model.QuantidadeDespesas</strong></p>
+
+                    <div class="form-group d-flex align-items-center justify-content-end gap-3">
+                        <a class="text-white" href="/categorias">Voltar para a listagem</a>
+                    </div>
+                }
+                else
+                {
+                    <p class="mt-4">Você deseja realmente excluir a categoria "<strong>@Model.Titulo</strong>"?</p>
+
+                    <form action="/categorias/excluir/@Model.Id" method="post">
+                        <div class="form-group d-flex align-items-center justify-content-end gap-3">
+                            <a class="text-white" href="/categorias">Voltar para a listagem</a>
+                            <button type="submit" class="btn btn-light px-5">Confirmar</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div> 

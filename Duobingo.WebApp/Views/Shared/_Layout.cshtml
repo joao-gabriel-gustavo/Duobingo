@@ -1,51 +1,81 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Duobingo.WebApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Duobingo.WebApp.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap-5.3.6-dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/css/app.css" />
+
+    <title>@ViewBag.Titulo | e-Agenda</title>
+
+    <style>
+        .brand-title {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Duobingo.WebApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
         <div class="container">
-            &copy; 2025 - Duobingo.WebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <a class="navbar-brand fs-3 fw-bold brand-title" href="/">
+                <i class="bi-journal-text me-2"></i>e-Agenda
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-flex gap-2">
+                    <li class="nav-item">
+                        <a href="/contatos" class="btn btn-outline-light rounded-pill">
+                            <i class="bi bi-person-lines-fill me-1"></i> Contatos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/compromissos" class="btn btn-outline-light rounded-pill">
+                            <i class="bi bi-calendar-check me-1"></i> Compromissos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/categorias" class="btn btn-outline-light rounded-pill">
+                            <i class="bi bi-tags me-1"></i> Categorias
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/despesas" class="btn btn-outline-light rounded-pill">
+                            <i class="bi bi-cash-coin me-1"></i> Despesas
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/tarefas" class="btn btn-outline-light rounded-pill">
+                            <i class="bi bi-list-check me-1"></i> Tarefas
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </footer>
+    </nav>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <header class="container my-4">
+        <h2 class="fw-bold">@ViewBag.Titulo</h2>
+    </header>
 
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <main class="container my-4">
+        @RenderBody()
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/ativacaoNavbar.js"></script>
+    @RenderSection("Scripts", required: false)
+
 </body>
 </html>

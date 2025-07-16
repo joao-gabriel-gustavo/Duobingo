@@ -1,0 +1,47 @@
+﻿@using Duobingo.ConsoleApp.Models
+@model VisualizarCompromissosViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Visualização de Compromissos";
+}
+
+<p>
+    <a class="btn btn-dark px-4" href="/compromissos/cadastrar">
+        <i class="bi bi-plus"></i>
+        Cadastrar Novo/a
+    </a>
+</p>
+
+<hr />
+@if (Model.Registros.Count == 0)
+{
+    <div class="alert alert-danger" role="alert">
+        Nenhum compromisso cadastrado!
+    </div>
+}
+<div class="d-flex flex-wrap gap-2">
+    @foreach (var item in Model.Registros)
+    {
+        <div class="col-12 col-md-3">
+            <div class="card border-0 bg-dark text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Compromissos:</h4>
+                    <h5>@item.Titulo </h5>
+                    <h5>Dia: @item.DataOcorrencia.ToString("dd/MM/yyyy")</h5>
+                    <span class="d-flex gap-1 justify-content-end mt-4">
+                        <a href="/compromissos/detalhes/@item.Id" class="btn btn-light rounded-circle opcao-card">
+                            <i class="bi bi-search"></i>
+                        </a>
+                        <a href="/compromissos/editar/@item.Id" class="btn btn-light rounded-circle opcao-card">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="/compromissos/excluir/@item.Id" class="btn btn-light rounded-circle opcao-card">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

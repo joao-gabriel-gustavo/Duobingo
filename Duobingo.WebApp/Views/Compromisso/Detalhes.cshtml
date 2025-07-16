@@ -1,0 +1,80 @@
+﻿@using Duobingo.ConsoleApp.Models
+@using Duobingo.WebApp.Models
+
+@model DetalhesCompromissoViewModel
+
+@{
+	Layout = "_Layout";
+	ViewBag.Titulo = "Detalhes do contato";
+}.
+
+
+<hr />
+<div class="row justify-content-center my-5">
+	<div class="col-md-8">
+
+		<div class="card bg-dark text-light rounded-4 border-0">
+			<div class="card-body p-md-5">
+				<h3>Detalhes</h3>
+
+				<div class="form-group d-grid gap-2">
+					<label asp-for="Titulo" class="control-label fs-5">Titulo:</label>
+					<input asp-for="Titulo" class="form-control" type="text" value="@Model.Titulo" readonly disabled />
+					<span asp-validation-for="Titulo" class="text-danger"></span>
+				</div>
+
+				<div class="form-group d-grid gap-2">
+					<label asp-for="Assunto" class="control-label fs-5">Assunto:</label>
+					<input asp-for="Assunto" class="form-control" type="text" value="@Model.Assunto" readonly disabled />
+					<span asp-validation-for="Assunto" class="text-danger"></span>
+				</div>
+
+				<div class="form-group d-grid gap-2 mt-3">
+					<label asp-for="DataOcorrencia" class="control-label fs-5">Data:</label>
+					<input asp-for="DataOcorrencia" class="form-control" type="date" value="@Model.DataOcorrencia.ToString("yyyy-MM-dd")" readonly disabled />
+					<span asp-validation-for="DataOcorrencia" class="text-danger"></span>
+				</div>
+
+				<div class="form-group d-grid gap-2 mt-3">
+					<label asp-for="HoraInicio" class="control-label fs-5">Hora de Início:</label>
+					<input asp-for="HoraInicio" class="form-control" type="time" value="@Model.HoraInicio" readonly disabled />
+					<span asp-validation-for="HoraInicio" class="text-danger"></span>
+				</div>
+
+				<div class="form-group d-grid gap-2 mt-3">
+					<label asp-for="HoraTermino" class="control-label fs-5">Hora de Término:</label>
+					<input asp-for="HoraTermino" class="form-control" type="time" value="@Model.HoraTermino" readonly disabled />
+					<span asp-validation-for="HoraTermino" class="text-danger"></span>
+				</div>
+
+				<div class="form-group d-grid gap-2 mt-3">
+					<label asp-for="TipoCompromisso" class="control-label fs-5">Tipo de Compromisso:</label>
+					<input asp-for="TipoCompromisso" class="form-control" type="text" value="@Model.TipoCompromisso" readonly disabled />
+				</div>
+
+				<div class="form-group d-grid gap-2 mt-3">
+					<label asp-for="Local" class="control-label fs-5">Local:</label>
+					<input asp-for="Local" class="form-control" type="text" value="@Model.Local" readonly disabled />
+				</div>
+
+				<div class="form-group d-grid gap-2 mt-3">
+					<label asp-for="Link" class="control-label fs-5">Link:</label>
+					<input asp-for="Link" class="form-control" type="text" value="@Model.Link" readonly disabled />
+				</div>
+
+				@if (Model.NomeContato != null)
+				{
+					<div class="form-group d-grid gap-2 mt-3">
+						<label asp-for="ContatoId" class="control-label fs-5">Contato:</label>
+						<input asp-for="ContatoId" class="form-control" type="text" value="@Model.NomeContato" readonly disabled />
+					</div>
+				}
+				<div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+					<a class="text-light" href="/compromissos">Voltar</a>
+				</div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

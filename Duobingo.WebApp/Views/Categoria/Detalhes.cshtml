@@ -1,0 +1,94 @@
+@model DetalhesCategoriaViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Detalhes da Categoria";
+}
+
+<hr />
+
+<div class="row justify-content-center my-5">
+    <div class="col-md-10">
+        <div class="card bg-dark text-white rounded-4 border-0">
+            <div class="card-body p-md-5">
+                <h3>Detalhes da Categoria</h3>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="Id" class="control-label fs-5">Id:</label>
+                    <input name="Id" class="form-control" value="@Model.Id" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="Titulo" class="control-label fs-5">Título:</label>
+                    <input name="Titulo" class="form-control" type="text" value="@Model.Titulo" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="QuantidadeDespesas" class="control-label fs-5">Quantidade de Despesas:</label>
+                    <input name="QuantidadeDespesas" class="form-control" type="text" value="@Model.QuantidadeDespesas" readonly disabled />
+                </div>
+
+                <div class="form-group d-grid gap-2 mt-3">
+                    <label for="ValorTotalDespesas" class="control-label fs-5">Valor Total das Despesas:</label>
+                    <input name="ValorTotalDespesas" class="form-control" type="text" value="R$ @Model.ValorTotalDespesas.ToString("F2")" readonly disabled />
+                </div>
+
+                <hr class="my-4" />
+
+                <h4 class="mb-4">Despesas Vinculadas</h4>
+
+                @if (Model.Despesas.Any())
+                {
+                    <div class="d-flex flex-wrap gap-3">
+                        @foreach (var despesa in Model.Despesas)
+                        {
+                            <div class="col-12 col-md-5">
+                                <div class="card border-1 border-secondary bg-secondary text-white">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@despesa.Descricao</h5>
+                                        <p class="card-text">
+                                            <strong>Valor:</strong> R$ @despesa.Valor.ToString("F2")<br>
+                                            <strong>Data:</strong> @despesa.DataOcorrencia.ToString("dd/MM/yyyy")<br>
+                                            <strong>Forma de Pagamento:</strong> @despesa.FormaPagamento
+                                        </p>
+                                        @if (despesa.Categorias.Count > 1)
+                                        {
+                                            <div class="mt-2">
+                                                <small class="text-light">
+                                                    <strong>Outras categorias:</strong>
+                                                    @foreach (var categoria in despesa.Categorias.Where(c => c != Model.Titulo))
+                                                    {
+                                                        <span class="badge bg-dark me-1">@categoria</span>
+                                                    }
+                                                </small>
+                                            </div>
+                                        }
+                                        <div class="d-flex gap-1 justify-content-end mt-3">
+                                            <a href="/despesas/editar/@despesa.Id" class="btn btn-light btn-sm rounded-circle">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a href="/despesas/excluir/@despesa.Id" class="btn btn-light btn-sm rounded-circle">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> Esta categoria não possui despesas vinculadas.
+                        <a href="/despesas/cadastrar" class="ms-2 text-dark">Cadastrar nova despesa</a>
+                    </div>
+                }
+
+                <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">
+                    <a class="text-white" href="/categorias">Voltar para a listagem</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
