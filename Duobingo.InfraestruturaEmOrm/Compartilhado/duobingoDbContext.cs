@@ -1,8 +1,6 @@
-﻿using eAgenda.Dominio.ModuloContato;
-using eAgenda.Dominio.ModuloCompromisso;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace eAgenda.Infraestrutura.Orm.Compartilhado
+namespace Duobingo.Infraestrutura.Orm.Compartilhado
 {
     public class duobingoDbContext : DbContext
     {

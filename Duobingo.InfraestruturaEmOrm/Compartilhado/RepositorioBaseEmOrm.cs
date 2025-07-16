@@ -1,7 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
-using eAgenda.Infraestrutura.Orm.Compartilhado;
+using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 
 namespace Duobingo.Infraestrutura.Orm.Compartilhado
