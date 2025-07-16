@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using eAgenda.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 
 namespace Duobingo.Infraestrutura.Orm.Compartilhado
@@ -9,7 +10,7 @@ namespace Duobingo.Infraestrutura.Orm.Compartilhado
     {
         private readonly DbSet<T> registros;
 
-        public RepositorioBaseEmOrm(eAgendaDbContext contexto)
+        public RepositorioBaseEmOrm(duobingoDbContext contexto)
         {
             this.registros = contexto.Set<T>();
         }

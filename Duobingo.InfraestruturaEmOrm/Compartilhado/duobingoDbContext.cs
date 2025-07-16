@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eAgenda.Infraestrutura.Orm.Compartilhado
 {
-    public class duobingoDbContexto : DbContext
+    public class duobingoDbContext : DbContext
     {
-        public duobingoDbContexto(DbContextOptions options) : base(options)
+        public duobingoDbContext(DbContextOptions options) : base(options)
         {
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var assembly = typeof(duobingoDbContexto).Assembly;
+            var assembly = typeof(duobingoDbContext).Assembly;
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             base.OnModelCreating(modelBuilder);
         }
