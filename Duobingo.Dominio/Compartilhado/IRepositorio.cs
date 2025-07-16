@@ -1,4 +1,4 @@
-﻿namespace eAgenda.Dominio.Compartilhado;
+﻿namespace Duobingo.Dominio.Compartilhado;
 
 public interface IRepositorio<T> where T : EntidadeBase<T>
 {

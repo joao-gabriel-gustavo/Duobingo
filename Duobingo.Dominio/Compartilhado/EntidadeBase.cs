@@ -1,4 +1,4 @@
-﻿namespace eAgenda.Dominio.Compartilhado;
+﻿namespace Duobingo.Dominio.Compartilhado;
 
 public abstract class EntidadeBase<T>
 {
