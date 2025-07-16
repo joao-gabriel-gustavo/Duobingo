@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace eAgenda.Infraestrutura.Orm.Compartilhado
+namespace Duobingo.Infraestrutura.Orm.Compartilhado
 {
     public class RepositorioBaseEmOrm<T> where T : EntidadeBase<T>
     {
