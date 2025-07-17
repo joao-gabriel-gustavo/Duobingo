@@ -13,6 +13,18 @@ namespace Duobingo.Dominio.ModuloQuestoes
         public string AlternativaC { get; set; }
         public string AlternativaD { get; set; }
         public string RespostaCorreta { get; set; }
+
+        public Questoes(Materia materia, string enunciado, string alternativaA, string alternativaB, string alternativaC, string alternativaD, string respostaCorreta)
+        {
+            Id = Guid.NewGuid();
+            Materia = materia;
+            Enunciado = enunciado;
+            AlternativaA = alternativaA;
+            AlternativaB = alternativaB;
+            AlternativaC = alternativaC;
+            AlternativaD = alternativaD;
+            RespostaCorreta = respostaCorreta;
+        }
         
         public override void AtualizarRegistro(Questoes registroEditado)
         {
