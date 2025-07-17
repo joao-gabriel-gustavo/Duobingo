@@ -8,9 +8,17 @@ namespace Duobingo.Dominio.ModuloMateria
         public string Nome { get; set; }
         public Disciplina Disciplina { get; set; }
         public string Serie { get; set; }
-        public override void AtualizarRegistro(Materia registroEditado)
+
+        public Materia(string nome, Disciplina disciplina, string serie)
         {
             Id = Guid.NewGuid();
+            Nome = nome;
+            Disciplina = disciplina;
+            Serie = serie;
+        }
+
+        public override void AtualizarRegistro(Materia registroEditado)
+        {
             Nome = registroEditado.Nome;
             Disciplina = registroEditado.Disciplina;
             Serie = registroEditado.Serie;
