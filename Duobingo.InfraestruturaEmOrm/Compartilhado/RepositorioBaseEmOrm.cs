@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
+using Duobingo.Dominio.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 
 namespace Duobingo.Infraestrutura.Orm.Compartilhado

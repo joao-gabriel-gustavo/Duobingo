@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Models\" />
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +38,11 @@
     <_ContentIncludedByDefault Remove="Views\Tarefas\Excluir.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Tarefas\GerenciarItens.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Tarefas\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
