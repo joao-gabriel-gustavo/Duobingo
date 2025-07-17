@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Extensions\**" />
     <Compile Remove="Models\**" />
-    <Content Remove="Extensions\**" />
     <Content Remove="Models\**" />
-    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="Models\**" />
-    <None Remove="Extensions\**" />
     <None Remove="Models\**" />
   </ItemGroup>
 
@@ -42,6 +38,11 @@
     <_ContentIncludedByDefault Remove="Views\Tarefas\Excluir.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Tarefas\GerenciarItens.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Tarefas\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
