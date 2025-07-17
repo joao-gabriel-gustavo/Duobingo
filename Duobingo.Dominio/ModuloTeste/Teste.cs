@@ -1,6 +1,7 @@
 ﻿
 using System.Runtime.CompilerServices;
 using Duobingo.Dominio.Compartilhado;
+using Duobingo.Dominio.ModuloDisciplina;
 using Duobingo.Dominio.ModuloMateria;
 
 namespace Duobingo.Dominio.ModuloTeste

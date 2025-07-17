@@ -1,5 +1,6 @@
-﻿using Serilog.Events;
+﻿
 using Serilog;
+using Serilog.Events;
 
 namespace Duobingo.WebApp.DependencyInjection;
 
@@ -19,6 +20,6 @@ public static class SerilogConfig
 
         logging.ClearProviders();
 
-        services.AddSerilog();
+        object value = services.AddSerilog();
     }
 }

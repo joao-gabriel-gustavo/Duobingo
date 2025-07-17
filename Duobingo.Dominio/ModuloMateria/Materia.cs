@@ -1,5 +1,6 @@
 ﻿
 using Duobingo.Dominio.Compartilhado;
+using Duobingo.Dominio.ModuloDisciplina;
 
 namespace Duobingo.Dominio.ModuloMateria
 {

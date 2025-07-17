@@ -41,12 +41,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="Extensions\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Duobingo.Dominio\Duobingo.Dominio.csproj" />
+    <ProjectReference Include="..\Duobingo.InfraestruturaEmOrm\Duobingo.InfraestruturaEmOrm.csproj" />
   </ItemGroup>
 
 </Project>
