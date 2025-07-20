@@ -1,5 +1,6 @@
 ﻿using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
+using Duobingo.WebApp.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,8 +23,8 @@ public class TesteController : Controller
     {
         var registros = repositorioTeste.SelecionarRegistros();
 
-
-        return View();
+        var visualizarVM = new VisualizarTestesViewModel(registros);
+        return View(visualizarVM);
     }
 
 }

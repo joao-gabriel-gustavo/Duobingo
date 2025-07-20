@@ -1,3 +1,5 @@
+using Duobingo.Dominio.ModuloTeste;
+using Duobingo.InfraestruturaEmOrm.ModuloTeste;
 using Duobingo.WebApp.ActionFilters;
 using Duobingo.WebApp.DependencyInjection;
 namespace eAgenda.WebApp;
@@ -14,7 +16,9 @@ public class Program
             options.Filters.Add<LogarAcaoAttribute>();
         });
 
-     
+
+        builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteEmOrm>();
+        builder.Services.AddEntityFrameworkConfig(builder.Configuration);
 
         builder.Services.AddSerilogConfig(builder.Logging);
 

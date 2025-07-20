@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Duobingo.Dominio.ModuloTeste;
+using Duobingo.Infraestrutura.Orm.ModuloTeste;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Duobingo.Infraestrutura.Orm.Compartilhado
 {
     public class duobingoDbContext : DbContext
     {
-        public duobingoDbContext(DbContextOptions options) : base(options)
+        public DbSet<Teste> Testes { get; set; }
+        public duobingoDbContext(DbContextOptions<duobingoDbContext> options) : base(options)
         {
 
         }
@@ -13,6 +17,7 @@ namespace Duobingo.Infraestrutura.Orm.Compartilhado
         {
             var assembly = typeof(duobingoDbContext).Assembly;
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+            modelBuilder.ApplyConfiguration(new MapeadorTesteEmOrm());
             base.OnModelCreating(modelBuilder);
         }
     }

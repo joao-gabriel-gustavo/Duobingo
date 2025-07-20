@@ -14,6 +14,10 @@ namespace Duobingo.Dominio.ModuloTeste
         public List<Materia> Materia { get; set; }
         public string Serie { get; set; }   
 
+        public Teste ()
+        {
+
+        }
         public Teste (string titulo, Disciplina disciplina, string serie)
         {
             Id = Guid.NewGuid();

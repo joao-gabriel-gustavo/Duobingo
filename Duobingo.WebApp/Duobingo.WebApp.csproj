@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>3cc8df6f-c4ef-4663-aafd-fb11e5731985</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,38 +15,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Categoria\Cadastrar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Categoria\Detalhes.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Categoria\Editar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Categoria\Excluir.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Categoria\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Contato\Cadastrar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Contato\Detalhes.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Contato\Editar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Contato\Excluir.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Contato\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Despesa\Cadastrar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Despesa\Editar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Despesa\Excluir.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Despesa\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefa\Cadastrar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefa\Editar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefa\Excluir.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefa\GerenciarItens.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefa\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefas\Cadastrar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefas\Editar.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefas\Excluir.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefas\GerenciarItens.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Tarefas\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.18" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
   </ItemGroup>
