@@ -1,9 +1,11 @@
-﻿using Duobingo.Dominio.ModuloDisciplina;
+﻿using System;
+using Duobingo.Dominio.ModuloDisciplina;
 using Duobingo.Dominio.ModuloMateria;
 using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Duobingo.WebApp.Extensions;
 using Duobingo.WebApp.Model;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -72,33 +74,37 @@ public class TesteController : Controller
 
 
         var entidade = cadastrarVM.ParaEntidade(disciplinasDisponiveis);
-      
-       
-        foreach( var ms in cadastrarVM.MateriasSelecionadas)
+
+
+        if (entidade.EhRecuperacao)
         {
-            foreach(var md in cadastrarVM.MateriasDisponiveis)
+            foreach (var M in entidade.Disciplina.Materias)
             {
-               if (md.Id.Equals(ms))
+                foreach (var q in M.Questoes)
                 {
-                    foreach(var mi in repositorioMateria.SelecionarRegistros())
-                    {
-                        if (mi.Id == md.Id)
-                        {
-                            entidade.Materia.Add(mi);
-                            entidade.Serie = mi.Serie;
-                        }
-                    }
+                    entidade.Questoes.Add(q);
                 }
             }
+            var random = new Random();
+            entidade.Questoes = entidade.Questoes.OrderBy(q => random.Next()).ToList();
+
         }
 
-        if(entidade.Materia.Count < 2)
+        if (!entidade.EhRecuperacao)
         {
-           entidade.Questoes 
+            foreach(var m in entidade.Materia)
+            {
+                foreach (var q in m.Questoes)
+                {
+                    entidade.Questoes.Add(q);
+                }
+            }
+
+            var random = new Random();
+            entidade.Questoes = entidade.Questoes.OrderBy(q => random.Next()).ToList();
         }
 
-
-        var transacao = contexto.Database.BeginTransaction();
+            var transacao = contexto.Database.BeginTransaction();
 
         try
         {

@@ -31,25 +31,27 @@
                     </div>
 
                     <div class="form-group d-grid gap-2 mt-3">
-                        <label class="control-label fs-5">Matérias:</label>
-                        <div class="d-flex flex-wrap gap-5 mt-2">
-                            @for (int i = 0; i < Model.MateriasDisponiveis?.Count(); i++)
+                        <label asp-for="MateriaId" class="control-label fs-5">Materia:</label>
+                        <select asp-for="MateriaId" name="MateriaId" id="MateriaId" class="form-select">
+                            <option value=""></option>
+                            @foreach (var materia in Model.MateriasDisponiveis)
                             {
-                                var materia = Model.MateriasDisponiveis.ElementAt(i);
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           name="MateriasSelecionadas[]"
-                                           value="@materia.Id"
-                                           id="materia_@materia.Id"
-                                    @(Model.MateriasSelecionadas != null && Model.MateriasSelecionadas.Contains(materia.Id) ? "checked" : "") />
-                                    <label class="form-check-label" for="materia_@materia.Id">
-                                        @materia.Nome
-                                    </label>
-                                </div>
+                                <option value="@materia.Id">@materia.Nome</option>
                             }
-                        </div>
-                        <span asp-validation-for="MateriasSelecionadas" class="text-danger"></span>
+                        </select>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <h5>Status:</h5>
+                        @if (Model.EhRecuperacao)
+                        {
+                            <span class="badge bg-warning text-dark">Teste de Recuperação</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Teste Normal</span>
+                        }
                     </div>
 
                     <div class="form-group d-flex align-items-center justify-content-end gap-3 mt-5">

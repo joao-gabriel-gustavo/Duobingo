@@ -15,12 +15,12 @@ namespace Duobingo.Dominio.ModuloTeste
         public List<Materia> Materia { get; set; }
         public List<Questoes> Questoes { get; set; }
         public string Serie { get; set; }   
-
+        public bool EhRecuperacao { get; set; }
         public Teste ()
         {
 
         }
-        public Teste (string titulo, Disciplina disciplina, string serie)
+        public Teste (string titulo, Disciplina disciplina, string serie, bool ehRecuperacao)
         {
             Id = Guid.NewGuid();
             Titulo = string.Empty;
@@ -28,7 +28,17 @@ namespace Duobingo.Dominio.ModuloTeste
             Materia =  new List<Materia>();
             Questoes = new List<Questoes>();
             Serie = serie;
+            EhRecuperacao = ehRecuperacao;
+        }
 
+        public Teste(string titulo, Disciplina disciplina, string serie) : this()
+        {
+            Id = Guid.NewGuid();
+            Titulo = string.Empty;
+            Disciplina = disciplina;
+            Materia = new List<Materia>();
+            Questoes = new List<Questoes>();
+            Serie = serie;
         }
         public override void AtualizarRegistro(Teste registroEditado)
         {
@@ -37,6 +47,7 @@ namespace Duobingo.Dominio.ModuloTeste
             Disciplina = registroEditado.Disciplina;
             Materia = registroEditado.Materia;
             Serie = registroEditado.Serie;
+            EhRecuperacao = registroEditado.EhRecuperacao;
         }
     }
 }
