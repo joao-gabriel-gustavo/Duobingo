@@ -7,8 +7,8 @@ using Duobingo.InfraestruturaEmOrm.ModuloTeste;
 using Duobingo.InfraestruturaEmOrm.ModuloQuestoes;
 using Duobingo.WebApp.ActionFilters;
 using Duobingo.WebApp.DependencyInjection;
-using Duobingo.Dominio.ModuloDisciplina;
-namespace eAgenda.WebApp;
+using DuoBingo.Dominio.ModuloDisciplina;
+namespace Duobingo.WebApp;
 
 public class Program
 {

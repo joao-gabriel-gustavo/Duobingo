@@ -4,6 +4,7 @@ using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duobingo.InfraestruturaEmOrm.Migrations
 {
     [DbContext(typeof(duobingoDbContext))]
-    partial class duobingoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250721170147_Add_AtualizaTabelaTeste")]
+    partial class Add_AtualizaTabelaTeste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Disciplina", (string)null);
+                    b.ToTable("Disciplina");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloMateria.Materia", b =>
@@ -64,7 +67,7 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasIndex("TesteId");
 
-                    b.ToTable("Materia", (string)null);
+                    b.ToTable("Materia");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloQuestoes.Alternativa", b =>
@@ -87,7 +90,7 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasIndex("QuestaoId");
 
-                    b.ToTable("Alternativas", (string)null);
+                    b.ToTable("Alternativas");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloQuestoes.Questoes", b =>
@@ -112,7 +115,7 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasIndex("TesteId");
 
-                    b.ToTable("Questoes", (string)null);
+                    b.ToTable("Questoes");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloTeste.Teste", b =>
@@ -137,7 +140,7 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasIndex("DisciplinaId");
 
-                    b.ToTable("Testes", (string)null);
+                    b.ToTable("Testes");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloMateria.Materia", b =>

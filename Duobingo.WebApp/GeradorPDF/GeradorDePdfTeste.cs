@@ -34,7 +34,6 @@ public class GeradorDePdfTeste
             .GeneratePdf(caminho);
 
             Console.WriteLine($"PDF gerado com sucesso em: {caminho}");
-
             System.Threading.Thread.Sleep(500);
 
             Process.Start(new ProcessStartInfo
@@ -51,7 +50,7 @@ public class GeradorDePdfTeste
         Console.ReadKey();
     }
 
-    public  void GeradorPDFGabarito()
+    public void GeradorPDFGabarito()
     {
         QuestPDF.Settings.License = LicenseType.Community;
 
@@ -69,14 +68,12 @@ public class GeradorDePdfTeste
                     page.Content().Column(col =>
                     {
                         
-                        col.Item().Text("Opa");
-                        col.Item().Text("Outro texto aqui");
+                       
                     });
                 });
             })
             .GeneratePdf(caminho);
 
-            Console.WriteLine($"PDF gerado com sucesso em: {caminho}");
 
             System.Threading.Thread.Sleep(500);
 
