@@ -1,6 +1,7 @@
 ﻿
 using Duobingo.Dominio.Compartilhado;
 using Duobingo.Dominio.ModuloDisciplina;
+using Duobingo.Dominio.ModuloQuestoes;
 using Duobingo.Dominio.ModuloTeste;
 
 namespace Duobingo.Dominio.ModuloMateria
@@ -10,6 +11,8 @@ namespace Duobingo.Dominio.ModuloMateria
         public string Nome { get; set; }
         public Disciplina Disciplina { get; set; }
         public string Serie { get; set; }
+
+        public List<Questoes> Questoes { get; set; } 
         public Materia()
         {
 
@@ -20,6 +23,7 @@ namespace Duobingo.Dominio.ModuloMateria
             Nome = nome;
             Disciplina = disciplina;
             Serie = serie;
+            Questoes = new List<Questoes>();
         }
 
         public override void AtualizarRegistro(Materia registroEditado)

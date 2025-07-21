@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Duobingo.Dominio.Compartilhado;
 using Duobingo.Dominio.ModuloDisciplina;
 using Duobingo.Dominio.ModuloMateria;
+using Duobingo.Dominio.ModuloQuestoes;
 
 namespace Duobingo.Dominio.ModuloTeste
 {
@@ -12,6 +13,7 @@ namespace Duobingo.Dominio.ModuloTeste
         public string Titulo { get; set; }
         public Disciplina Disciplina { get; set; }
         public List<Materia> Materia { get; set; }
+        public List<Questoes> Questoes { get; set; }
         public string Serie { get; set; }   
 
         public Teste ()
@@ -24,6 +26,7 @@ namespace Duobingo.Dominio.ModuloTeste
             Titulo = string.Empty;
             Disciplina = disciplina;
             Materia =  new List<Materia>();
+            Questoes = new List<Questoes>();
             Serie = serie;
 
         }

@@ -84,14 +84,20 @@ public class TesteController : Controller
                     {
                         if (mi.Id == md.Id)
                         {
-                            entidade.Materia.Add(new Materia(md.Nome, entidade.Disciplina, mi.Serie));
+                            entidade.Materia.Add(mi);
                             entidade.Serie = mi.Serie;
                         }
-                                
                     }
                 }
             }
         }
+
+        if(entidade.Materia.Count < 2)
+        {
+           entidade.Questoes = entidade.Materia.First<Materia>().Questoes;
+        }
+
+
         var transacao = contexto.Database.BeginTransaction();
 
         try

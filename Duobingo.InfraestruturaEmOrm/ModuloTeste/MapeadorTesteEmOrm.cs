@@ -25,6 +25,8 @@ namespace Duobingo.Infraestrutura.Orm.ModuloTeste
             builder.HasOne(t => t.Disciplina);
 
             builder.HasMany(t => t.Materia);
+
+            builder.HasMany(t => t.Questoes);
         }
     }
 }
