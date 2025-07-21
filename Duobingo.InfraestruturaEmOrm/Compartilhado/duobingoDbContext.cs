@@ -11,6 +11,7 @@ namespace Duobingo.Infraestrutura.Orm.Compartilhado
     {
         public DbSet<Teste> Testes { get; set; }
         public DbSet<Materia> Materias { get; set; }
+        public DbSet<Materia> Disciplinas { get; set; }
         public duobingoDbContext(DbContextOptions<duobingoDbContext> options) : base(options)
         {
 
