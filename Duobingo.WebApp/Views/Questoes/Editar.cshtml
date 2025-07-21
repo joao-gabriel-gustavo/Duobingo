@@ -1,0 +1,223 @@
+@using Duobingo.WebApp.Model
+@model EditarQuestaoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Editar Questão";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+        <form asp-action="Editar" asp-route-id="@Model.Id" method="post" id="formQuestao">
+            <input asp-for="Id" type="hidden" />
+            
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="bi bi-pencil-square"></i>
+                        Editar Questão
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="MateriaId" class="form-label">Matéria *</label>
+                        <select asp-for="MateriaId" class="form-select">
+                            <option value="">Selecione uma matéria</option>
+                            @foreach (var materia in Model.MateriasDisponiveis)
+                            {
+                                <option value="@materia.Id" selected="@(materia.Id == Model.MateriaId)">@materia.Nome</option>
+                            }
+                        </select>
+                        <span asp-validation-for="MateriaId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Enunciado" class="form-label">Enunciado da Questão *</label>
+                        <textarea asp-for="Enunciado" class="form-control" rows="4" placeholder="Digite o enunciado da questão..."></textarea>
+                        <span asp-validation-for="Enunciado" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Alternativas *</label>
+                        <div id="alternativas-container">
+                            @for (int i = 0; i < Model.Alternativas.Count; i++)
+                            {
+                                <div class="alternativa-item mb-2" data-index="@i">
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <input type="radio" name="AlternativaCorreta" value="@i" @(Model.Alternativas[i].EhCorreta ? "checked" : "") class="form-check-input mt-0" title="Marcar como resposta correta">
+                                        </div>
+                                        <input asp-for="@Model.Alternativas[i].Texto" class="form-control" placeholder="Digite a alternativa..." />
+                                        <input asp-for="@Model.Alternativas[i].Id" type="hidden" />
+                                        <input asp-for="@Model.Alternativas[i].EhCorreta" type="hidden" />
+                                        @if (i >= 2 || Model.Alternativas.Count > 2)
+                                        {
+                                            <button type="button" class="btn btn-outline-danger" onclick="removerAlternativa(this)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        
+                        @if (Model.Alternativas.Count < 4)
+                        {
+                            <button type="button" id="btnAdicionarAlternativa" class="btn btn-outline-primary btn-sm mt-2">
+                                <i class="bi bi-plus"></i> Adicionar Alternativa
+                            </button>
+                        }
+                        
+                        <div class="form-text">
+                            Marque o círculo à esquerda para indicar a alternativa correta. Mínimo: 2 alternativas, Máximo: 4 alternativas.
+                        </div>
+                        <span asp-validation-for="Alternativas" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-light">
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a href="/questoes" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="bi bi-check-lg"></i> Salvar Alterações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let alternativaIndex = @Model.Alternativas.Count;
+        
+        function atualizarBotaoAdicionar() {
+            const btnAdicionar = document.getElementById('btnAdicionarAlternativa');
+            if (btnAdicionar) {
+                if (document.querySelectorAll('.alternativa-item').length >= 4) {
+                    btnAdicionar.style.display = 'none';
+                } else {
+                    btnAdicionar.style.display = 'inline-block';
+                }
+            }
+        }
+        
+        const btnAdicionar = document.getElementById('btnAdicionarAlternativa');
+        if (btnAdicionar) {
+            btnAdicionar.addEventListener('click', function() {
+                if (document.querySelectorAll('.alternativa-item').length >= 4) {
+                    alert('Máximo de 4 alternativas permitidas.');
+                    return;
+                }
+                
+                const container = document.getElementById('alternativas-container');
+                const newId = generateGuid();
+                
+                const alternativaHtml = `
+                    <div class="alternativa-item mb-2" data-index="${alternativaIndex}">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <input type="radio" name="AlternativaCorreta" value="${alternativaIndex}" class="form-check-input mt-0" title="Marcar como resposta correta">
+                            </div>
+                            <input name="Alternativas[${alternativaIndex}].Texto" class="form-control" placeholder="Digite a alternativa..." />
+                            <input name="Alternativas[${alternativaIndex}].Id" type="hidden" value="${newId}" />
+                            <input name="Alternativas[${alternativaIndex}].EhCorreta" type="hidden" value="false" />
+                            <button type="button" class="btn btn-outline-danger" onclick="removerAlternativa(this)">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', alternativaHtml);
+                alternativaIndex++;
+                atualizarBotaoAdicionar();
+            });
+        }
+        
+        function removerAlternativa(button) {
+            const alternativasCount = document.querySelectorAll('.alternativa-item').length;
+            if (alternativasCount <= 2) {
+                alert('Mínimo de 2 alternativas obrigatórias.');
+                return;
+            }
+            
+            button.closest('.alternativa-item').remove();
+            reindexarAlternativas();
+            atualizarBotaoAdicionar();
+        }
+        
+        function reindexarAlternativas() {
+            const alternativas = document.querySelectorAll('.alternativa-item');
+            alternativas.forEach((item, index) => {
+                item.setAttribute('data-index', index);
+                
+                const radio = item.querySelector('input[type="radio"]');
+                radio.value = index;
+                
+                const textoInput = item.querySelector('input[name*=".Texto"]');
+                textoInput.name = `Alternativas[${index}].Texto`;
+                
+                const idInput = item.querySelector('input[name*=".Id"]');
+                idInput.name = `Alternativas[${index}].Id`;
+                
+                const corretaInput = item.querySelector('input[name*=".EhCorreta"]');
+                corretaInput.name = `Alternativas[${index}].EhCorreta`;
+            });
+        }
+        
+        // Atualizar o valor EhCorreta quando radio button for selecionado
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'AlternativaCorreta') {
+                const alternativas = document.querySelectorAll('.alternativa-item');
+                alternativas.forEach((item, index) => {
+                    const corretaInput = item.querySelector('input[name*=".EhCorreta"]');
+                    corretaInput.value = (index == e.target.value) ? 'true' : 'false';
+                });
+            }
+        });
+        
+        function generateGuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        
+        // Validação antes do submit
+        document.getElementById('formQuestao').addEventListener('submit', function(e) {
+            const alternativasComTexto = Array.from(document.querySelectorAll('input[name*=".Texto"]'))
+                .filter(input => input.value.trim() !== '');
+                
+            if (alternativasComTexto.length < 2) {
+                e.preventDefault();
+                alert('É necessário ter pelo menos 2 alternativas preenchidas.');
+                return;
+            }
+            
+            const radioSelecionado = document.querySelector('input[name="AlternativaCorreta"]:checked');
+            if (!radioSelecionado) {
+                e.preventDefault();
+                alert('É necessário marcar uma alternativa como correta.');
+                return;
+            }
+            
+            // Verificar se a alternativa marcada como correta tem texto
+            const indexCorreto = radioSelecionado.value;
+            const textoCorreto = document.querySelector(`input[name="Alternativas[${indexCorreto}].Texto"]`).value.trim();
+            if (textoCorreto === '') {
+                e.preventDefault();
+                alert('A alternativa marcada como correta deve ter texto preenchido.');
+                return;
+            }
+        });
+        
+        // Inicializar
+        atualizarBotaoAdicionar();
+    </script>
+} 
+} 

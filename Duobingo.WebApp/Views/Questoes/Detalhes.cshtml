@@ -1,0 +1,92 @@
+@using Duobingo.WebApp.Model
+@model DetalhesQuestaoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Detalhes da Questão";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-question-circle"></i>
+                    Detalhes da Questão
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">ID:</label>
+                    <p class="form-control-plaintext text-muted small">@Model.Id</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Matéria:</label>
+                    <p class="form-control-plaintext">
+                        <span class="badge bg-primary fs-6">@Model.Materia.Nome</span>
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Enunciado:</label>
+                    <div class="p-3 bg-light border rounded">
+                        @Model.Enunciado
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Alternativas:</label>
+                    <div class="row">
+                        @for (int i = 0; i < Model.Alternativas.Count; i++)
+                        {
+                            var alternativa = Model.Alternativas[i];
+                            var letra = char.ConvertFromUtf32(65 + i); // A, B, C, D
+                            
+                            <div class="col-12 mb-2">
+                                <div class="card @(alternativa.EhCorreta ? "border-success" : "border-secondary")">
+                                    <div class="card-body py-2 @(alternativa.EhCorreta ? "bg-success bg-opacity-10" : "")">
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge @(alternativa.EhCorreta ? "bg-success" : "bg-secondary") me-2">@letra</span>
+                                            <span class="@(alternativa.EhCorreta ? "fw-bold" : "")">@alternativa.Texto</span>
+                                            @if (alternativa.EhCorreta)
+                                            {
+                                                <i class="bi bi-check-circle-fill text-success ms-auto"></i>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Resposta Correta:</label>
+                    <p class="form-control-plaintext">
+                        <span class="text-success fw-bold fs-5">
+                            <i class="bi bi-check-circle-fill"></i>
+                            @Model.RespostaCorreta
+                        </span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card-footer bg-light">
+                <div class="d-flex gap-2 justify-content-between">
+                    <a href="/questoes" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Voltar para Lista
+                    </a>
+                    <div class="d-flex gap-2">
+                        <a href="/questoes/editar/@Model.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <a href="/questoes/excluir/@Model.Id" class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i> Excluir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

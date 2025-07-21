@@ -4,6 +4,7 @@ using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duobingo.InfraestruturaEmOrm.Migrations
 {
     [DbContext(typeof(duobingoDbContext))]
-    partial class duobingoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250721124455_AddQuestoesAndAlternativas")]
+    partial class AddQuestoesAndAlternativas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
