@@ -14,7 +14,7 @@ namespace Duobingo.InfraestruturaEmOrm.ModuloQuestoes
 
             builder.Property(a => a.Texto)
                 .IsRequired()
-                .HasMaxLength(500);
+                .HasMaxLength(200);
 
             builder.Property(a => a.EhCorreta)
                 .IsRequired();

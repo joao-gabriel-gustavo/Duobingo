@@ -36,7 +36,11 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label">Alternativas *</label>
+                        <label class="form-label mb-0">Alternativas *</label>
+                        <div class="form-text text-muted mt-0 mb-2">
+                            Marque o círculo à esquerda para indicar a alternativa correta. Mínimo: 2 alternativas, Máximo: 4 alternativas.
+                        </div>
+                        
                         <div id="alternativas-container">
                             @for (int i = 0; i < Model.Alternativas.Count; i++)
                             {
@@ -62,10 +66,6 @@
                         <button type="button" id="btnAdicionarAlternativa" class="btn btn-outline-primary btn-sm mt-2">
                             <i class="bi bi-plus"></i> Adicionar Alternativa
                         </button>
-                        
-                        <div class="form-text">
-                            Marque o círculo à esquerda para indicar a alternativa correta. Mínimo: 2 alternativas, Máximo: 4 alternativas.
-                        </div>
                         <span asp-validation-for="Alternativas" class="text-danger"></span>
                     </div>
                 </div>
