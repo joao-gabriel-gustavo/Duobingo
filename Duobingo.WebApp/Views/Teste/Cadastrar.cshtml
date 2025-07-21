@@ -21,8 +21,8 @@
 
                     <div class="form-group d-grid gap-2 mt-3">
                         <label asp-for="DisciplinaId" class="control-label fs-5">Disciplina:</label>
-                        <select asp-for="DisciplinaId" name="ContatoId" id="ContatoId" class="form-select">
-                            <option value="">Sem contato</option>
+                        <select asp-for="DisciplinaId" name="DisciplinaId" id="DisciplinaId" class="form-select">
+                            <option value=""></option>
                             @foreach (var disciplina in Model.DisciplinasDisponiveis)
                             {
                                 <option value="@disciplina.Id">@disciplina.Nome</option>
@@ -49,8 +49,6 @@
                                 </div>
                             }
                         </div>
-                        <span asp-validation-for="MateriasSelecionadas" class="text-danger"></span>
-                    </div>
                         <span asp-validation-for="MateriasSelecionadas" class="text-danger"></span>
                     </div>
 
