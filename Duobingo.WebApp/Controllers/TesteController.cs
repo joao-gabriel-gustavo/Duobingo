@@ -1,6 +1,7 @@
 ﻿using Duobingo.Dominio.ModuloMateria;
 using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
+using Duobingo.WebApp.Extensions;
 using Duobingo.WebApp.Model;
 using DuoBingo.Dominio.ModuloDisciplina;
 using Microsoft.AspNetCore.Mvc;
@@ -42,5 +43,64 @@ public class TesteController : Controller
 
         return View(cadastrarVM);
     }
+
+
+    [HttpPost("cadastrar")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Cadastrar(CadastrarTesteViewModel cadastrarVM)
+    {
+        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
+        var disciplinasDisponiveis = repositorioDisciplina.SelecionarRegistros();
+
+        if (!ModelState.IsValid)
+        {
+            foreach (var m in materiasDisponiveis)
+            {
+                var selecionarVM = new DetalhesMateriaViewModel(m.Id, m.Nome);
+
+                cadastrarVM.MateriasDisponiveis?.Add(selecionarVM);
+            }
+
+            foreach (var d in materiasDisponiveis)
+            {
+                var selecionarVM = new DetalhesDisciplinaViewModel(d.Id, d.Nome);
+
+                cadastrarVM.DisciplinasDisponiveis?.Add(selecionarVM);
+            }
+            return View(cadastrarVM);
+        }
+
+        var entidade = cadastrarVM.ParaEntidade(disciplinasDisponiveis);
+
+        foreach( var ms in cadastrarVM.MateriasSelecionadas)
+        {
+            foreach(var md in cadastrarVM.MateriasDisponiveis)
+            {
+               if (md.Id.Equals(ms))
+                {
+                    entidade.Materia.Add(new Materia(md.Nome, entidade.Disciplina, entidade.Serie));
+                }
+            }
+        }
+        var transacao = contexto.Database.BeginTransaction();
+
+        try
+        {
+            repositorioTeste.CadastrarRegistro(entidade);
+            contexto.SaveChanges();
+            transacao.Commit();
+
+        }
+
+        catch (Exception)
+        {
+            transacao.Rollback();
+            throw;
+        }
+
+
+        return RedirectToAction(nameof(Index));
+    }
+
 
 }
