@@ -94,7 +94,7 @@ public class TesteController : Controller
 
         if(entidade.Materia.Count < 2)
         {
-           entidade.Questoes 
+            // entidade.Questoes;
         }
 
 
