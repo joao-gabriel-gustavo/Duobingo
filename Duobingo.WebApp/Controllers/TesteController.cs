@@ -70,15 +70,25 @@ public class TesteController : Controller
             return View(cadastrarVM);
         }
 
-        var entidade = cadastrarVM.ParaEntidade(disciplinasDisponiveis);
 
+        var entidade = cadastrarVM.ParaEntidade(disciplinasDisponiveis);
+      
+       
         foreach( var ms in cadastrarVM.MateriasSelecionadas)
         {
             foreach(var md in cadastrarVM.MateriasDisponiveis)
             {
                if (md.Id.Equals(ms))
                 {
-                    entidade.Materia.Add(new Materia(md.Nome, entidade.Disciplina, entidade.Serie));
+                    foreach(var mi in repositorioMateria.SelecionarRegistros())
+                    {
+                        if (mi.Id == md.Id)
+                        {
+                            entidade.Materia.Add(new Materia(md.Nome, entidade.Disciplina, mi.Serie));
+                            entidade.Serie = mi.Serie;
+                        }
+                                
+                    }
                 }
             }
         }
