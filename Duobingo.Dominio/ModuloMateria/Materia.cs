@@ -10,7 +10,6 @@ namespace Duobingo.Dominio.ModuloMateria
         public string Nome { get; set; }
         public Disciplina Disciplina { get; set; }
         public string Serie { get; set; }
-        public List<Teste> Testes { get; set; }
         public Materia()
         {
 

@@ -10,9 +10,10 @@ namespace Duobingo.WebApp.DependencyInjection
             var connectionString = configuration["SQL_CONNECTION_STRING"];
 
             services.AddDbContext<duobingoDbContext>(options =>
-            options.UseSqlServer(connectionString));
-
-
+                options.UseSqlServer(connectionString, sqlOptions =>
+                    sqlOptions.MigrationsAssembly("Duobingo.InfraestruturaEmOrm")
+                )
+            );
         }
     }
 }

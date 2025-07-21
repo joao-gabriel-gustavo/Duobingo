@@ -22,12 +22,9 @@ namespace Duobingo.Infraestrutura.Orm.ModuloTeste
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasOne(t => t.Disciplina)
-                .WithMany()
-                .IsRequired();
+            builder.HasOne(t => t.Disciplina);
 
-            builder.HasMany(t => t.Materia)
-                .WithMany();
+            builder.HasMany(t => t.Materia);
         }
     }
 }
