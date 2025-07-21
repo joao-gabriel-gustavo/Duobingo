@@ -44,7 +44,7 @@ public class DisciplinaController : Controller
     {
         ViewBag.Title = "Disciplinas | Cadastrar";
 
-        var disciplinas = RepositorioDisciplina.SelecionarTodos();
+        var disciplinas = RepositorioDisciplina.SelecionarRegistros();
 
         foreach (var item in disciplinas)
         {
@@ -95,7 +95,7 @@ public class DisciplinaController : Controller
     {
         ViewBag.Title = "Disciplinas | Editar";
 
-        var disciplinas = RepositorioDisciplina.SelecionarTodos();
+        var disciplinas = RepositorioDisciplina.SelecionarRegistros();
 
         if (disciplinas.Any(x => !x.Id.Equals(id) && x.Nome.Equals(editarVM.Nome)))
         {
