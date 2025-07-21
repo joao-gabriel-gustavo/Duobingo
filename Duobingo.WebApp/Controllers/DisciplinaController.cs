@@ -48,7 +48,7 @@ public class DisciplinaController : Controller
 
         foreach (var item in disciplinas)
         {
-            if (string.Equals(item.Nome, cadastrarVm.Nome, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(item., cadastrarVm.Nome))
             {
                 ModelState.AddModelError("CadastroUnico", "Já existe uma disciplina registrada com este nome.");
                 return View(cadastrarVm);
