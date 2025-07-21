@@ -94,6 +94,7 @@ public class TesteController : Controller
 
         if(entidade.Materia.Count < 2)
         {
+            // comentado pra evitar erro
             // entidade.Questoes;
         }
 
