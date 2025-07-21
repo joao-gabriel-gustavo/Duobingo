@@ -1,7 +1,11 @@
+using Duobingo.Dominio.ModuloMateria;
 using Duobingo.Dominio.ModuloTeste;
+using Duobingo.InfraestruturaEmOrm.ModuloDisciplina;
+using Duobingo.InfraestruturaEmOrm.ModuloMateria;
 using Duobingo.InfraestruturaEmOrm.ModuloTeste;
 using Duobingo.WebApp.ActionFilters;
 using Duobingo.WebApp.DependencyInjection;
+using DuoBingo.Dominio.ModuloDisciplina;
 namespace eAgenda.WebApp;
 
 public class Program
@@ -18,6 +22,8 @@ public class Program
 
         
         builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteEmOrm>();
+        builder.Services.AddScoped<IRepositorioDisciplina, RepositorioDisciplinaEmOrm>();
+        builder.Services.AddScoped<IRepositorioMateria, RepositorioMateriaEmOrm>();
         builder.Services.AddEntityFrameworkConfig(builder.Configuration);
         builder.Services.AddSerilogConfig(builder.Logging);
 

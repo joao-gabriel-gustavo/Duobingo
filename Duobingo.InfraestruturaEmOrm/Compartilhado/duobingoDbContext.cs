@@ -3,7 +3,6 @@ using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.ModuloMateria;
 using Duobingo.Infraestrutura.Orm.ModuloTeste;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Duobingo.Infraestrutura.Orm.Compartilhado
 {
