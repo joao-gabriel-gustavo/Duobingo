@@ -9,7 +9,7 @@ namespace Duobingo.Infraestrutura.Orm.Compartilhado
 {
     public class RepositorioBaseEmOrm<T> where T : EntidadeBase<T>
     {
-        private readonly DbSet<T> registros;
+        protected readonly DbSet<T> registros;
 
         public RepositorioBaseEmOrm(duobingoDbContext contexto)
         {
