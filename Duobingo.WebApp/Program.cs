@@ -16,10 +16,9 @@ public class Program
             options.Filters.Add<LogarAcaoAttribute>();
         });
 
-
+        
         builder.Services.AddScoped<IRepositorioTeste, RepositorioTesteEmOrm>();
         builder.Services.AddEntityFrameworkConfig(builder.Configuration);
-
         builder.Services.AddSerilogConfig(builder.Logging);
 
         var app = builder.Build();

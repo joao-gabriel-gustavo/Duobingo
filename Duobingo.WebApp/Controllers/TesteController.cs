@@ -1,6 +1,8 @@
-﻿using Duobingo.Dominio.ModuloTeste;
+﻿using Duobingo.Dominio.ModuloMateria;
+using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Duobingo.WebApp.Model;
+using DuoBingo.Dominio.ModuloDisciplina;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -10,11 +12,15 @@ namespace Duobingo.WebApp.Controllers;
 public class TesteController : Controller
 {
     private readonly IRepositorioTeste repositorioTeste;
+    private readonly IRepositorioMateria repositorioMateria;
+    private readonly IRepositorioDisciplina repositorioDisciplina;
     private readonly duobingoDbContext contexto;
 
-    public TesteController(IRepositorioTeste repositorioTeste, duobingoDbContext contexto)
+    public TesteController(IRepositorioTeste repositorioTeste, IRepositorioDisciplina repositorioDisciplina, IRepositorioMateria repositorioMateria, duobingoDbContext contexto)
     {
         this.repositorioTeste = repositorioTeste;
+        this.repositorioMateria = repositorioMateria;
+        this.repositorioDisciplina = repositorioDisciplina;
         this.contexto = contexto;
     }
 
@@ -25,6 +31,16 @@ public class TesteController : Controller
 
         var visualizarVM = new VisualizarTestesViewModel(registros);
         return View(visualizarVM);
+    }
+
+    [HttpGet("cadastrar")]
+    public IActionResult Cadastrar()
+    {
+        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
+        var disciplinasDisponiveis = repositorioDisciplina.SelecionarRegistros();
+        var cadastrarVM = new CadastrarTesteViewModel(materiasDisponiveis, disciplinasDisponiveis);
+
+        return View(cadastrarVM);
     }
 
 }
