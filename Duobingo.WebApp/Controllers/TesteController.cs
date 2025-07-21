@@ -1,8 +1,8 @@
-﻿using Duobingo.Dominio.ModuloMateria;
+﻿using Duobingo.Dominio.ModuloDisciplina;
+using Duobingo.Dominio.ModuloMateria;
 using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Duobingo.WebApp.Model;
-using DuoBingo.Dominio.ModuloDisciplina;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

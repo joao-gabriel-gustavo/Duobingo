@@ -1,9 +1,10 @@
 ﻿using Duobingo.Dominio.Compartilhado;
 using Duobingo.Dominio.ModuloDisciplina;
 
-namespace DuoBingo.Dominio.ModuloDisciplina
+namespace Duobingo.Dominio.ModuloDisciplina
 {
     public interface IRepositorioDisciplina : IRepositorio<Disciplina>
     {
+        IEnumerable<object> SelecionarTodos();
     }
 }

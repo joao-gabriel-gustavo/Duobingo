@@ -5,7 +5,7 @@ using Duobingo.InfraestruturaEmOrm.ModuloMateria;
 using Duobingo.InfraestruturaEmOrm.ModuloTeste;
 using Duobingo.WebApp.ActionFilters;
 using Duobingo.WebApp.DependencyInjection;
-using DuoBingo.Dominio.ModuloDisciplina;
+using Duobingo.Dominio.ModuloDisciplina;
 namespace eAgenda.WebApp;
 
 public class Program
