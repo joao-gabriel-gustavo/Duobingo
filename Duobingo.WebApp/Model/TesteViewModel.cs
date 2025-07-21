@@ -13,12 +13,37 @@ namespace Duobingo.WebApp.Model
         public string Titulo { get; set; }
         public string Serie { get; set; }
         public Guid DisciplinaId { get; set; }
-
+        public List<Guid> MateriasSelecionadas { get; set; }
         public List<DetalhesMateriaViewModel>? MateriasDisponiveis { get; set; }
         public List<DetalhesDisciplinaViewModel> DisciplinasDisponiveis { get; set; }
 
     }
 
+    public class CadastrarTesteViewModel : FormularioTesteViewModel
+    {
+        public CadastrarTesteViewModel()
+        {
+            MateriasDisponiveis = new List<DetalhesMateriaViewModel>();
+            DisciplinasDisponiveis = new List<DetalhesDisciplinaViewModel>();
+        }
+
+        public CadastrarTesteViewModel(List<Materia> materias, List<Disciplina> disciplinas) : this()
+        {
+            foreach (var m in materias)
+            {
+                var selecionarVM = new DetalhesMateriaViewModel(m.Id, m.Nome);
+
+                MateriasDisponiveis?.Add(selecionarVM);
+            }
+
+            foreach(var d in disciplinas)
+            {
+                var selecionarVM = new DetalhesDisciplinaViewModel(d.Id, d.Nome);
+
+                DisciplinasDisponiveis?.Add(selecionarVM);
+            }
+        }
+    }
 
 
     public class VisualizarTestesViewModel
@@ -48,6 +73,7 @@ namespace Duobingo.WebApp.Model
         {
             Disciplina = new DetalhesDisciplinaViewModel(disciplina.Id, disciplina.Nome);
             Serie = serie;
+            Materias = new List<DetalhesMateriaViewModel>();
 
             foreach (var materia in materias)
             {
@@ -83,30 +109,5 @@ namespace Duobingo.WebApp.Model
     }
 
 
-    public class CadastrarTesteViewModel : FormularioTesteViewModel
-    {
-        public CadastrarTesteViewModel()
-        {
-            MateriasDisponiveis = new List<DetalhesMateriaViewModel>();
-           DisciplinasDisponiveis = new List<DetalhesDisciplinaViewModel>();
-        }
-
-        public CadastrarTesteViewModel(List<Materia> materias, List<Disciplina> disciplinas) : this()
-        {
-            foreach (var m in materias)
-            {
-                var selecionarVM = new DetalhesMateriaViewModel(m.Id, m.Nome);
-
-                MateriasDisponiveis?.Add(selecionarVM);
-            }
-
-            foreach (var d in disciplinas)
-            {
-                var selecionarVM = new DetalhesDisciplinaViewModel(d.Id, d.Nome);
-
-                DisciplinasDisponiveis?.Add(selecionarVM);
-            }
-        }
-    }
 }
 

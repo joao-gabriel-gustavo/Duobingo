@@ -1,0 +1,75 @@
+@using Duobingo.WebApp.Model
+@model ExcluirQuestaoViewModel
+
+@{
+    Layout = "_Layout";
+    ViewBag.Titulo = "Excluir Questão";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+        <div class="card border-danger shadow">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    Confirmar Exclusão
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Atenção!</strong> Esta ação não pode ser desfeita. Tem certeza que deseja excluir esta questão?
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Matéria:</label>
+                    <p class="form-control-plaintext">@Model.NomeMateria</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Enunciado:</label>
+                    <p class="form-control-plaintext">@Model.Enunciado</p>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Alternativas:</label>
+                    <ul class="list-group">
+                        @foreach (var alternativa in Model.Alternativas)
+                        {
+                            <li class="list-group-item @(alternativa.EhCorreta ? "list-group-item-success" : "")">
+                                @if (alternativa.EhCorreta)
+                                {
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    <strong>@alternativa.Texto</strong>
+                                    <span class="badge bg-success ms-2">Resposta Correta</span>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-circle me-2"></i>
+                                    @alternativa.Texto
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Resposta Correta:</label>
+                    <p class="form-control-plaintext text-success fw-bold">@Model.RespostaCorreta</p>
+                </div>
+            </div>
+            
+            <div class="card-footer bg-light">
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="/questoes" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                    <form asp-action="ConfirmarExclusao" asp-route-id="@Model.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger px-4" onclick="return confirm('Tem certeza que deseja excluir esta questão?')">
+                            <i class="bi bi-trash"></i> Confirmar Exclusão
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

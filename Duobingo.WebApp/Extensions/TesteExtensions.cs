@@ -1,4 +1,6 @@
-﻿using Duobingo.Dominio.ModuloTeste;
+﻿using Duobingo.Dominio.ModuloDisciplina;
+using Duobingo.Dominio.ModuloMateria;
+using Duobingo.Dominio.ModuloTeste;
 using Duobingo.WebApp.Model;
 
 namespace Duobingo.WebApp.Extensions
@@ -16,5 +18,25 @@ namespace Duobingo.WebApp.Extensions
                 teste.Materia
                 );
         }
+        public static Teste ParaEntidade(this FormularioTesteViewModel formularioVM,List<Disciplina> disciplinas)
+        {
+            Disciplina? disciplinaSelecionada = null;
+
+            foreach (var d in disciplinas)
+            {
+                if (d.Id.Equals(formularioVM.DisciplinaId))
+                {
+                    disciplinaSelecionada = d;
+                    break;
+                }
+            }
+
+            return new Teste(
+                formularioVM.Titulo,
+                disciplinaSelecionada,
+                formularioVM.Serie
+            );
+        }
+
     }
 }
