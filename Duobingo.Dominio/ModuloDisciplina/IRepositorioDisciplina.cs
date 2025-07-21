@@ -5,6 +5,5 @@ namespace Duobingo.Dominio.ModuloDisciplina
 {
     public interface IRepositorioDisciplina : IRepositorio<Disciplina>
     {
-        IEnumerable<object> SelecionarTodos();
     }
 }
