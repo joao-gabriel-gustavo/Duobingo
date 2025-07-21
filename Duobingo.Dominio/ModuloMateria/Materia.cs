@@ -9,23 +9,24 @@ namespace Duobingo.Dominio.ModuloMateria
     public class Materia : EntidadeBase<Materia>
     {
         public string Nome { get; set; }
+        public Serie Serie { get; set; }
         public Disciplina Disciplina { get; set; }
-        public string Serie { get; set; }
+        public List<Questoes> Questoes { get; set; }
+        public List<Teste> Testes { get; set; }
 
-        public List<Questoes> Questoes { get; set; } 
         public Materia()
         {
-
-        }
-        public Materia(string nome, Disciplina disciplina, string serie)
-        {
-            Id = Guid.NewGuid();
-            Nome = nome;
-            Disciplina = disciplina;
-            Serie = serie;
+            Testes = new List<Teste>();
             Questoes = new List<Questoes>();
         }
 
+        public Materia(string nome, Serie serie, Disciplina disciplina) : this()
+        {
+            Id = Guid.NewGuid();
+            Nome = nome;
+            Serie = serie;
+            Disciplina = disciplina;
+        }
         public override void AtualizarRegistro(Materia registroEditado)
         {
             Nome = registroEditado.Nome;

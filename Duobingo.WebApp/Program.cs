@@ -7,7 +7,7 @@ using Duobingo.InfraestruturaEmOrm.ModuloTeste;
 using Duobingo.InfraestruturaEmOrm.ModuloQuestoes;
 using Duobingo.WebApp.ActionFilters;
 using Duobingo.WebApp.DependencyInjection;
-using DuoBingo.Dominio.ModuloDisciplina;
+using Duobingo.Dominio.ModuloDisciplina;
 namespace Duobingo.WebApp;
 
 public class Program
