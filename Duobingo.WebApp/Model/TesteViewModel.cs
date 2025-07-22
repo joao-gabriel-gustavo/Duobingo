@@ -28,6 +28,7 @@ namespace Duobingo.WebApp.Model
         {
             MateriasDisponiveis = new List<DetalhesMateriaTesteViewModel>();
             DisciplinasDisponiveis = new List<DetalhesDisciplinaViewModel>();
+            SeriesDisponiveis = new List<String>();
         }
 
         public CadastrarTesteViewModel(List<Materia> materias, List<Disciplina> disciplinas) : this()

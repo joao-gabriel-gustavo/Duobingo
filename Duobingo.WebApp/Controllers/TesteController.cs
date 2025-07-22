@@ -34,18 +34,7 @@ public class TesteController : Controller
         return View(visualizarVM);
     }
 
-    [HttpGet("cadastrar")]
-    public IActionResult Cadastrar()
-    {
-        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-        var disciplinasDisponiveis = repositorioDisciplina.SelecionarRegistros();
-        var cadastrarVM = new CadastrarTesteViewModel(materiasDisponiveis, disciplinasDisponiveis);
-
-        return View(cadastrarVM);
-    }
-
-    [HttpGet("cadastrarprimeiraetapa")]
-    [ValidateAntiForgeryToken]
+    [HttpGet("etapaum")]
     public IActionResult CadastrarPrimeiraEtapa(CadastrarTesteViewModel cadastrarVM)
     {
         var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
@@ -71,8 +60,8 @@ public class TesteController : Controller
         return View(cadastrarVM);
     }
 
+
     [HttpPost("cadastrar")]
-    [ValidateAntiForgeryToken]
     public IActionResult Cadastrar(CadastrarTesteViewModel cadastrarVM)
     {
         var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
