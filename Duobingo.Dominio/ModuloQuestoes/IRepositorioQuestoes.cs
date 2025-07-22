@@ -5,7 +5,7 @@ namespace Duobingo.Dominio.ModuloQuestoes
 {
     public interface IRepositorioQuestoes : IRepositorio<Questoes>
     {
-        List<Questoes> SelecionarQuestoesPorMateria(Guid materiaId);
+        List<Questoes> SelecionarQuestoesPorMateria(Materia materia);
         bool QuestaoEstaVinculadaATeste(Guid questaoId);
         bool ExcluirQuestao(Guid questaoId);
     }

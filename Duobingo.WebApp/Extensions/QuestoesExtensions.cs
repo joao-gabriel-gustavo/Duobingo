@@ -25,7 +25,7 @@ namespace Duobingo.WebApp.Extensions
             }
 
             questao.Enunciado = viewModel.Enunciado;
-           // questao.MateriaId = viewModel.MateriaId;
+                       questao.Materia = viewModel.Materia;
 
             // Limpa alternativas existentes se for edição
             if (questaoExistente != null)

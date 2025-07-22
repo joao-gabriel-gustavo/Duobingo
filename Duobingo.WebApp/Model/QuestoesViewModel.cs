@@ -9,7 +9,8 @@ namespace Duobingo.WebApp.Model
     {
         public Guid Id { get; set; }
         public string Enunciado { get; set; }
-        public Guid MateriaId { get; set; }
+        public Guid MateriaId { get; set; } 
+        public Materia? Materia { get; set; }
         public List<DetalhesAlternativaViewModel> Alternativas { get; set; }
         public List<DetalhesMateriaTesteViewModel> MateriasDisponiveis { get; set; }
 
@@ -99,7 +100,8 @@ namespace Duobingo.WebApp.Model
         {
             Id = questao.Id;
             Enunciado = questao.Enunciado;
-            //MateriaId = questao.MateriaId;
+            MateriaId = questao.Materia?.Id ?? Guid.Empty;
+            Materia = questao.Materia;
             
             foreach (var a in questao.Alternativas)
             {

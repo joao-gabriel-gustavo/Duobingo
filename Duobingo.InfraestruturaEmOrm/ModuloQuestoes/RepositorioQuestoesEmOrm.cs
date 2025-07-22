@@ -1,4 +1,5 @@
 using Duobingo.Dominio.ModuloQuestoes;
+using Duobingo.Dominio.ModuloMateria;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,13 +32,13 @@ namespace Duobingo.InfraestruturaEmOrm.ModuloQuestoes
                 .FirstOrDefault(q => q.Id == idRegistro);
         }
 
-        public List<Questoes> SelecionarQuestoesPorMateria(Guid materiaId)
+        public List<Questoes> SelecionarQuestoesPorMateria(Materia materia)
         {
             return contexto.Questoes
                 .Include(q => q.Materia)
                     .ThenInclude(m => m.Disciplina)
                 .Include(q => q.Alternativas)
-                //.Where(q => q.MateriaId == materiaId)
+                // .Where(q => q.Materia.Id == materia.Id)
                 .ToList();
         }
 

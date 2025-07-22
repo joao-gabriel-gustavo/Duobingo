@@ -58,6 +58,8 @@ public class QuestoesController : Controller
                 return View(viewModel);
             }
 
+            viewModel.Materia = materia;
+            
             var questao = new Questoes(materia, viewModel.Enunciado);
 
             var alternativasComTexto = viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Texto)).ToList();
@@ -135,6 +137,9 @@ public class QuestoesController : Controller
                 return View(viewModel);
             }
 
+            // Populate the Materia object in the ViewModel
+            viewModel.Materia = materia;
+
             var alternativasComTexto = viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Texto)).ToList();
             
             if (alternativasComTexto.Count < 2)
@@ -155,7 +160,6 @@ public class QuestoesController : Controller
 
             questaoExistente.Enunciado = viewModel.Enunciado;
             questaoExistente.Materia = materia;
-           // questaoExistente.MateriaId = materia.Id;
 
             contexto.Alternativas.RemoveRange(questaoExistente.Alternativas);
             questaoExistente.Alternativas.Clear();
