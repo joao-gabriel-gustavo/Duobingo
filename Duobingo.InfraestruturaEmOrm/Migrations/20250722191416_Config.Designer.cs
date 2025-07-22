@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duobingo.InfraestruturaEmOrm.Migrations
 {
     [DbContext(typeof(duobingoDbContext))]
-    [Migration("20250722004920_Add_MigracaoCompleta")]
-    partial class Add_MigracaoCompleta
+    [Migration("20250722191416_Config")]
+    partial class Config
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,10 +53,8 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Serie")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Serie")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -127,6 +125,9 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.Property<Guid>("MateriaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("MateriaId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("QuantidadeQuestoes")
                         .HasColumnType("int");
 
@@ -145,6 +146,8 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.HasIndex("DisciplinaId");
 
                     b.HasIndex("MateriaId");
+
+                    b.HasIndex("MateriaId1");
 
                     b.ToTable("Testes");
                 });
@@ -196,9 +199,11 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", "Materia")
                         .WithMany()
-                        .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MateriaId");
+
+                    b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", null)
+                        .WithMany("Testes")
+                        .HasForeignKey("MateriaId1");
 
                     b.Navigation("Disciplina");
 
@@ -213,6 +218,8 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
             modelBuilder.Entity("Duobingo.Dominio.ModuloMateria.Materia", b =>
                 {
                     b.Navigation("Questoes");
+
+                    b.Navigation("Testes");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloQuestoes.Questoes", b =>

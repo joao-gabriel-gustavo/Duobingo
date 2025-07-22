@@ -19,7 +19,8 @@ namespace Duobingo.Infraestrutura.Orm.ModuloTeste
                 .HasMaxLength(100);
 
 
-            builder.HasOne(t => t.Materia);
+            builder.HasOne(t => t.Materia).WithMany().
+                IsRequired(false);
 
             builder.HasMany(t => t.Questoes);
 

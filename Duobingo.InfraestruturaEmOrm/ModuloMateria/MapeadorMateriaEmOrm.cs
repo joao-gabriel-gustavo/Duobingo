@@ -17,15 +17,14 @@
                     .IsRequired()
                     .HasMaxLength(100);
 
-                 builder.Property(t => t.Serie)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                builder.Property(t => t.Serie)
+                    .IsRequired();
 
                  builder.HasOne(t => t.Disciplina)
                     .WithMany(d => d.Materias);
 
-            builder.HasMany(t => t.Questoes)
-             .WithOne(q => q.Materia);
+                builder.HasMany(t => t.Questoes)
+                    .WithOne(q => q.Materia);
             }
     }
-    }
+}
