@@ -43,7 +43,7 @@ public class QuestoesController : Controller
         if (!ModelState.IsValid)
         {
             var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
             return View(viewModel);
         }
 
@@ -54,7 +54,7 @@ public class QuestoesController : Controller
             {
                 ModelState.AddModelError("MateriaId", "Matéria não encontrada.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
             }
 
@@ -66,7 +66,7 @@ public class QuestoesController : Controller
             {
                 ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos 2 alternativas.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
             }
 
@@ -74,7 +74,7 @@ public class QuestoesController : Controller
             {
                 ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos uma alternativa correta.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
             }
 
@@ -93,7 +93,7 @@ public class QuestoesController : Controller
         {
             ModelState.AddModelError("", $"Erro ao cadastrar questão: {ex.Message}");
             var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
             return View(viewModel);
         }
     }
@@ -116,7 +116,7 @@ public class QuestoesController : Controller
         if (!ModelState.IsValid)
         {
             var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
             return View(viewModel);
         }
 
@@ -131,7 +131,7 @@ public class QuestoesController : Controller
             {
                 ModelState.AddModelError("MateriaId", "Matéria não encontrada.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
             }
 
@@ -141,7 +141,7 @@ public class QuestoesController : Controller
             {
                 ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos 2 alternativas.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
             }
 
@@ -149,7 +149,7 @@ public class QuestoesController : Controller
             {
                 ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos uma alternativa correta.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
             }
 
@@ -179,7 +179,7 @@ public class QuestoesController : Controller
         {
             ModelState.AddModelError("", $"Erro ao editar questão: {ex.Message}");
             var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaViewModel(m.Id, m.Nome)).ToList();
+            viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
             return View(viewModel);
         }
     }
