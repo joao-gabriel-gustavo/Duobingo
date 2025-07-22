@@ -11,12 +11,12 @@ namespace Duobingo.WebApp.Model
         public string Enunciado { get; set; }
         public Guid MateriaId { get; set; }
         public List<DetalhesAlternativaViewModel> Alternativas { get; set; }
-        public List<DetalhesMateriaViewModel> MateriasDisponiveis { get; set; }
+        public List<DetalhesMateriaTesteViewModel> MateriasDisponiveis { get; set; }
 
         public FormularioQuestoesViewModel()
         {
             Alternativas = new List<DetalhesAlternativaViewModel>();
-            MateriasDisponiveis = new List<DetalhesMateriaViewModel>();
+            MateriasDisponiveis = new List<DetalhesMateriaTesteViewModel>();
         }
     }
 
@@ -37,7 +37,7 @@ namespace Duobingo.WebApp.Model
     {
         public Guid Id { get; set; }
         public string Enunciado { get; set; }
-        public DetalhesMateriaViewModel Materia { get; set; }
+        public DetalhesMateriaTesteViewModel Materia { get; set; }
         public List<DetalhesAlternativaViewModel> Alternativas { get; set; }
         public string RespostaCorreta { get; set; }
 
@@ -45,7 +45,7 @@ namespace Duobingo.WebApp.Model
         {
             Id = id;
             Enunciado = enunciado;
-            Materia = new DetalhesMateriaViewModel(materia.Id, materia.Nome);
+            Materia = new DetalhesMateriaTesteViewModel(materia.Id, materia.Nome);
             Alternativas = alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Texto, a.EhCorreta)).ToList();
             RespostaCorreta = alternativas.FirstOrDefault(a => a.EhCorreta)?.Texto ?? "Não definida";
         }
@@ -83,7 +83,7 @@ namespace Duobingo.WebApp.Model
         {
             foreach (var m in materias)
             {
-                var materiaVM = new DetalhesMateriaViewModel(m.Id, m.Nome);
+                var materiaVM = new DetalhesMateriaTesteViewModel(m.Id, m.Nome);
                 MateriasDisponiveis.Add(materiaVM);
             }
         }
@@ -108,7 +108,7 @@ namespace Duobingo.WebApp.Model
 
             foreach (var m in materias)
             {
-                var materiaVM = new DetalhesMateriaViewModel(m.Id, m.Nome);
+                var materiaVM = new DetalhesMateriaTesteViewModel(m.Id, m.Nome);
                 MateriasDisponiveis.Add(materiaVM);
             }
         }
