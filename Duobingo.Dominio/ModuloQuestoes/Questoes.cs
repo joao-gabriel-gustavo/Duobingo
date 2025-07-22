@@ -1,6 +1,7 @@
 ﻿
 using Duobingo.Dominio.Compartilhado;
 using Duobingo.Dominio.ModuloMateria;
+using Duobingo.Dominio.ModuloTeste;
 
 namespace Duobingo.Dominio.ModuloQuestoes
 {
@@ -37,6 +38,7 @@ namespace Duobingo.Dominio.ModuloQuestoes
         public string Enunciado { get; set; }
         public List<Alternativa> Alternativas { get; set; }
 
+        public List<Teste> Testes { get; set; }
         public Questoes()
         {
             Id = Guid.NewGuid();

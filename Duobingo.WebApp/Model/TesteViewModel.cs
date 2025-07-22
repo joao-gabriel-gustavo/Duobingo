@@ -15,7 +15,7 @@ namespace Duobingo.WebApp.Model
         public int QuantidadeQuestoes { get; set; }
         public Guid DisciplinaId { get; set; }
         public Guid MateriaId { get; set; }
-        public List<string> SeriesDisponiveis { get; set; }
+        public List<string> SeriesDisponiveis { get; set; } 
         public bool EhRecuperacao { get; set; }
         public List<DetalhesMateriaTesteViewModel>? MateriasDisponiveis { get; set; }
         public List<DetalhesDisciplinaViewModel> DisciplinasDisponiveis { get; set; }

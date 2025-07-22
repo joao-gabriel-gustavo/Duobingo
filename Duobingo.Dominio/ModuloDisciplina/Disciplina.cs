@@ -7,7 +7,9 @@ namespace Duobingo.Dominio.ModuloDisciplina;
 public class Disciplina : EntidadeBase<Disciplina>
 {
     public string Nome { get; set; }
-    public List<Materia> Materias { get; set; } 
+    public List<Materia> Materias { get; set; }
+    public List<Teste> Testes { get; set; }
+
     public Disciplina()
     {
         Materias = new List<Materia>();
