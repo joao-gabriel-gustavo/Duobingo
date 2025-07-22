@@ -107,8 +107,6 @@ namespace Duobingo.WebApp.Model
 
         public DetalhesMateriaViewModel(Guid id, string nome, Serie serie, String disciplina)
         {
-            Id = id;
-            Nome = nome;
             Serie = serie;
             Disciplina = disciplina;
         }

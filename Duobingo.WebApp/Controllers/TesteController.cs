@@ -44,6 +44,32 @@ public class TesteController : Controller
         return View(cadastrarVM);
     }
 
+    [HttpGet("cadastrarprimeiraetapa")]
+    [ValidateAntiForgeryToken]
+    public IActionResult CadastrarPrimeiraEtapa(CadastrarTesteViewModel cadastrarVM)
+    {
+        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
+        var disciplinasDisponiveis = repositorioDisciplina.SelecionarRegistros();
+
+        Disciplina Disciplina = new Disciplina();
+
+        foreach (var m in repositorioDisciplina.SelecionarRegistros())
+        {
+            if (cadastrarVM.DisciplinaId == m.Id)
+            {
+                Disciplina.Id = m.Id;
+                Disciplina.Nome = m.Nome;
+                Disciplina.Materias = m.Materias;
+            }
+        }
+
+        foreach (var s in Disciplina.Materias)
+        {
+            cadastrarVM.SeriesDisponiveis.Add(s.Serie.ToString());
+        }
+
+        return View(cadastrarVM);
+    }
 
     [HttpPost("cadastrar")]
     [ValidateAntiForgeryToken]
@@ -121,31 +147,5 @@ public class TesteController : Controller
         return View(cadastrarVM);
     }
 
-    [HttpPost("cadastrarprimeiraetapa")]
-    [ValidateAntiForgeryToken]
-    public IActionResult CadastrarPrimeiraEtapa(CadastrarTesteViewModel cadastrarVM)
-    {
-        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-        var disciplinasDisponiveis = repositorioDisciplina.SelecionarRegistros();
-
-        Disciplina Disciplina = new Disciplina();
-
-        foreach(var m in repositorioDisciplina.SelecionarRegistros())
-        {
-            if(cadastrarVM.DisciplinaId == m.Id)
-            {
-                Disciplina.Id = m.Id;
-                Disciplina.Nome = m.Nome;
-                Disciplina.Materias = m.Materias;
-            }
-        }
-
-        foreach(var s in Disciplina.Materias)
-        {
-            cadastrarVM.SeriesDisponiveis.Add(s.Serie.ToString());
-        }
-
-        return View(cadastrarVM);
-    }
 
 }

@@ -16,9 +16,9 @@ namespace Duobingo.WebApp.Controllers
 
         public MateriaController(duobingoDbContext contexto, IRepositorioMateria repositorioMateria, IRepositorioDisciplina repositorioDisciplina)
         {
-            contexto = contexto;
-            repositorioMateria = repositorioMateria;
-            repositorioDisciplina = repositorioDisciplina;
+            this.contexto = contexto;
+            this.repositorioMateria = repositorioMateria;
+            this.repositorioDisciplina = repositorioDisciplina;
         }
 
         public IActionResult Index()
