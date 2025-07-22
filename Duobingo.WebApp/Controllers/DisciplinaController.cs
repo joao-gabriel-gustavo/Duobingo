@@ -18,6 +18,7 @@ public class DisciplinaController : Controller
         RepositorioDisciplina = repositorioDisciplina;
     }
 
+    [HttpGet()]
     public IActionResult Index()
     {
         ViewBag.Title = "Gerador de Testes | Disciplinas";
