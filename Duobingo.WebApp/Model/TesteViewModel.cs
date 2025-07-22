@@ -95,6 +95,7 @@ namespace Duobingo.WebApp.Model
         public Guid Id { get; set; }
         public string Nome { get; set; }
 
+
         public DetalhesMateriaViewModel(Guid id, string nome)
         {
             Id = id;
