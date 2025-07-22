@@ -16,11 +16,15 @@ namespace Duobingo.InfraestruturaEmOrm.ModuloQuestoes
                 .IsRequired()
                 .HasMaxLength(500);
 
+            builder.Property(q => q.UtilizadaEmTeste)
+                .IsRequired()
+
+            builder.HasOne(q => q.Materia)
+                .WithMany(m => m.Questoes)
+                .IsRequired();
 
             builder.HasMany(q => q.Alternativas)
                 .WithOne(a => a.Questao)
-                .HasForeignKey(a => a.QuestaoId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 } 
