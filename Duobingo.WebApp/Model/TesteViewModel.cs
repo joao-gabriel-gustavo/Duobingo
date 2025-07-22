@@ -17,7 +17,7 @@ namespace Duobingo.WebApp.Model
         public Guid MateriaId { get; set; }
         public List<string> SeriesDisponiveis { get; set; }
         public bool EhRecuperacao { get; set; }
-        public List<DetalhesMateriaViewModel>? MateriasDisponiveis { get; set; }
+        public List<DetalhesMateriaTesteViewModel>? MateriasDisponiveis { get; set; }
         public List<DetalhesDisciplinaViewModel> DisciplinasDisponiveis { get; set; }
 
     }
@@ -70,14 +70,14 @@ namespace Duobingo.WebApp.Model
         public string Titulo { get; set; }
         public string Serie { get; set; }
         public int QuantidadeQuestoes { get; set; }
-        public DetalhesMateriaViewModel Materia { get; set; }
+        public DetalhesMateriaTesteViewModel Materia { get; set; }
         public DetalhesDisciplinaViewModel Disciplina { get; set; }
 
         public DetalhesTesteViewModel(Guid Id, string Titulo, string serie, Disciplina disciplina, Materia materia)
         {
             Disciplina = new DetalhesDisciplinaViewModel(disciplina.Id, disciplina.Nome);
             Serie = serie;
-            Materia = new  DetalhesMateriaViewModel(materia.Id, materia.Nome);
+            Materia = new  DetalhesMateriaTesteViewModel(materia.Id, materia.Nome);
         }
     }
 
@@ -93,13 +93,13 @@ namespace Duobingo.WebApp.Model
         }
     }
 
-    public class DetalhesMateriaViewModel
+    public class DetalhesMateriaTesteViewModel
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
 
 
-        public DetalhesMateriaViewModel(Guid id, string nome)
+        public DetalhesMateriaTesteViewModel(Guid id, string nome)
         {
             Id = id;
             Nome = nome;
