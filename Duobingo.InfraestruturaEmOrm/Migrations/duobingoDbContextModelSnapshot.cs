@@ -51,7 +51,6 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Serie")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -97,9 +96,14 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.Property<Guid>("MateriaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("TesteId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MateriaId");
+
+                    b.HasIndex("TesteId");
 
                     b.ToTable("Questoes");
                 });
@@ -118,12 +122,16 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.Property<Guid>("MateriaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("MateriaId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("QuantidadeQuestoes")
                         .HasColumnType("int");
 
                     b.Property<string>("Serie")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -136,22 +144,9 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.HasIndex("MateriaId");
 
+                    b.HasIndex("MateriaId1");
+
                     b.ToTable("Testes");
-                });
-
-            modelBuilder.Entity("QuestoesTeste", b =>
-                {
-                    b.Property<Guid>("QuestoesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("QuestoesId", "TestesId");
-
-                    b.HasIndex("TestesId");
-
-                    b.ToTable("QuestoesTeste");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloMateria.Materia", b =>
@@ -184,46 +179,37 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Duobingo.Dominio.ModuloTeste.Teste", null)
+                        .WithMany("Questoes")
+                        .HasForeignKey("TesteId");
+
                     b.Navigation("Materia");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloTeste.Teste", b =>
                 {
                     b.HasOne("Duobingo.Dominio.ModuloDisciplina.Disciplina", "Disciplina")
-                        .WithMany("Testes")
+                        .WithMany()
                         .HasForeignKey("DisciplinaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", "Materia")
-                        .WithMany("Testes")
+                        .WithMany()
                         .HasForeignKey("MateriaId");
+
+                    b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", null)
+                        .WithMany("Testes")
+                        .HasForeignKey("MateriaId1");
 
                     b.Navigation("Disciplina");
 
                     b.Navigation("Materia");
                 });
 
-            modelBuilder.Entity("QuestoesTeste", b =>
-                {
-                    b.HasOne("Duobingo.Dominio.ModuloQuestoes.Questoes", null)
-                        .WithMany()
-                        .HasForeignKey("QuestoesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Duobingo.Dominio.ModuloTeste.Teste", null)
-                        .WithMany()
-                        .HasForeignKey("TestesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Duobingo.Dominio.ModuloDisciplina.Disciplina", b =>
                 {
                     b.Navigation("Materias");
-
-                    b.Navigation("Testes");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloMateria.Materia", b =>
@@ -236,6 +222,11 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
             modelBuilder.Entity("Duobingo.Dominio.ModuloQuestoes.Questoes", b =>
                 {
                     b.Navigation("Alternativas");
+                });
+
+            modelBuilder.Entity("Duobingo.Dominio.ModuloTeste.Teste", b =>
+                {
+                    b.Navigation("Questoes");
                 });
 #pragma warning restore 612, 618
         }

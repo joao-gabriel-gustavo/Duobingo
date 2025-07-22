@@ -12,8 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Duobingo.InfraestruturaEmOrm.Migrations
 {
     [DbContext(typeof(duobingoDbContext))]
+<<<<<<<< HEAD:Duobingo.InfraestruturaEmOrm/Migrations/20250722193110_Add_AdicionadoColunasNoTeste.Designer.cs
     [Migration("20250722193110_Add_AdicionadoColunasNoTeste")]
     partial class Add_AdicionadoColunasNoTeste
+========
+    [Migration("20250722191416_Config")]
+    partial class Config
+>>>>>>>> 9f01efd3c8f33372f52200854e4ce91e7d9dff7f:Duobingo.InfraestruturaEmOrm/Migrations/20250722191416_Config.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +59,10 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Serie")
+<<<<<<<< HEAD:Duobingo.InfraestruturaEmOrm/Migrations/20250722193110_Add_AdicionadoColunasNoTeste.Designer.cs
                         .HasMaxLength(50)
+========
+>>>>>>>> 9f01efd3c8f33372f52200854e4ce91e7d9dff7f:Duobingo.InfraestruturaEmOrm/Migrations/20250722191416_Config.Designer.cs
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -126,6 +134,9 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.Property<Guid>("MateriaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("MateriaId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("QuantidadeQuestoes")
                         .HasColumnType("int");
 
@@ -143,6 +154,8 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.HasIndex("DisciplinaId");
 
                     b.HasIndex("MateriaId");
+
+                    b.HasIndex("MateriaId1");
 
                     b.ToTable("Testes");
                 });
@@ -193,10 +206,19 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                         .IsRequired();
 
                     b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", "Materia")
+<<<<<<<< HEAD:Duobingo.InfraestruturaEmOrm/Migrations/20250722193110_Add_AdicionadoColunasNoTeste.Designer.cs
                         .WithMany("Testes")
                         .HasForeignKey("MateriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+========
+                        .WithMany()
+                        .HasForeignKey("MateriaId");
+
+                    b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", null)
+                        .WithMany("Testes")
+                        .HasForeignKey("MateriaId1");
+>>>>>>>> 9f01efd3c8f33372f52200854e4ce91e7d9dff7f:Duobingo.InfraestruturaEmOrm/Migrations/20250722191416_Config.Designer.cs
 
                     b.Navigation("Disciplina");
 
