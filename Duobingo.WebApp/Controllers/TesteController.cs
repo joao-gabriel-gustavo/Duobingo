@@ -5,9 +5,7 @@ using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Infraestrutura.Orm.Compartilhado;
 using Duobingo.WebApp.Extensions;
 using Duobingo.WebApp.Model;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Duobingo.WebApp.Controllers;
 
@@ -58,7 +56,7 @@ public class TesteController : Controller
         {
             foreach (var m in materiasDisponiveis)
             {
-                var selecionarVM = new DetalhesMateriaViewModel(m.Id, m.Nome);
+                var selecionarVM = new DetalhesMateriaTesteViewModel(m.Id, m.Nome);
 
                 cadastrarVM.MateriasDisponiveis?.Add(selecionarVM);
             }
