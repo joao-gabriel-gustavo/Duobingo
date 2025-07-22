@@ -9,23 +9,22 @@ namespace Duobingo.InfraestruturaEmOrm.ModuloQuestoes
         public void Configure(EntityTypeBuilder<Alternativa> builder)
         {
             builder.Property(a => a.Id)
-                .IsRequired()
-                .ValueGeneratedNever();
-
-            builder.Property(a => a.Texto)
-                .IsRequired()
-                .HasMaxLength(200);
-
-            builder.Property(a => a.EhCorreta)
+                .ValueGeneratedNever()
                 .IsRequired();
 
-            builder.Property(a => a.QuestaoId)
+            builder.Property(a => a.Letra)
+                .IsRequired();
+
+            builder.Property(a => a.Resposta)
+                .HasMaxLength(200)
+                .IsRequired();
+
+            builder.Property(a => a.Correta)
                 .IsRequired();
 
             builder.HasOne(a => a.Questao)
                 .WithMany(q => q.Alternativas)
-                .HasForeignKey(a => a.QuestaoId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired();
         }
     }
 } 
