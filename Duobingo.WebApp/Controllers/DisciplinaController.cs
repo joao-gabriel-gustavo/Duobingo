@@ -14,8 +14,8 @@ public class DisciplinaController : Controller
 
     public DisciplinaController(duobingoDbContext contexto, IRepositorioDisciplina repositorioDisciplina)
     {
-        contexto = contexto;
-        RepositorioDisciplina = repositorioDisciplina;
+        this.contexto = contexto;
+        this.RepositorioDisciplina = repositorioDisciplina;
     }
 
     [HttpGet()]
