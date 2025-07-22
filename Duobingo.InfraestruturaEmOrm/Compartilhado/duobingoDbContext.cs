@@ -30,6 +30,17 @@ namespace Duobingo.Infraestrutura.Orm.Compartilhado
             modelBuilder.ApplyConfiguration(new MapeadorQuestoesEmOrm());
             modelBuilder.ApplyConfiguration(new MapeadorAlternativaEmOrm());
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Teste>(builder =>
+            {
+                builder.HasOne(t => t.Disciplina)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                builder.HasOne(t => t.Materia)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }

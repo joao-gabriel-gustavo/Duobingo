@@ -12,32 +12,35 @@ namespace Duobingo.Dominio.ModuloTeste
 
         public string Titulo { get; set; }
         public Disciplina Disciplina { get; set; }
-        public List<Materia> Materia { get; set; }
+        public Materia Materia { get; set; }
         public List<Questoes> Questoes { get; set; }
         public string Serie { get; set; }   
+
+        public int QuantidadeQuestoes { get;set; }
         public bool EhRecuperacao { get; set; }
         public Teste ()
         {
 
         }
-        public Teste (string titulo, Disciplina disciplina, string serie, bool ehRecuperacao)
+        public Teste (string titulo, Disciplina disciplina, Materia materia, int quantidadeQuestoes, string serie, bool ehRecuperacao)
         {
             Id = Guid.NewGuid();
             Titulo = string.Empty;
             Disciplina = disciplina;
-            Materia =  new List<Materia>();
+            Materia = materia;
             Questoes = new List<Questoes>();
+            QuantidadeQuestoes = quantidadeQuestoes;
             Serie = serie;
             EhRecuperacao = ehRecuperacao;
         }
 
-        public Teste(string titulo, Disciplina disciplina, string serie) : this()
+        public Teste(string titulo, Disciplina disciplina, int quantidadeQuestoes, string serie) : this()
         {
             Id = Guid.NewGuid();
             Titulo = string.Empty;
             Disciplina = disciplina;
-            Materia = new List<Materia>();
             Questoes = new List<Questoes>();
+            QuantidadeQuestoes = quantidadeQuestoes;
             Serie = serie;
         }
         public override void AtualizarRegistro(Teste registroEditado)

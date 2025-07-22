@@ -33,7 +33,7 @@ namespace Duobingo.Dominio.ModuloQuestoes
     public class Questoes : EntidadeBase<Questoes>
     {
         public Materia Materia { get; set; }
-        public Guid MateriaId { get; set; }
+        
         public string Enunciado { get; set; }
         public List<Alternativa> Alternativas { get; set; }
 
@@ -46,7 +46,7 @@ namespace Duobingo.Dominio.ModuloQuestoes
         public Questoes(Materia materia, string enunciado) : this()
         {
             Materia = materia;
-            MateriaId = materia.Id;
+           
             Enunciado = enunciado;
         }
 
@@ -112,7 +112,6 @@ namespace Duobingo.Dominio.ModuloQuestoes
         public override void AtualizarRegistro(Questoes registroEditado)
         {
             Materia = registroEditado.Materia;
-            MateriaId = registroEditado.MateriaId;
             Enunciado = registroEditado.Enunciado;
             
             Alternativas.Clear();

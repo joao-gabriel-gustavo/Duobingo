@@ -86,19 +86,18 @@ public class TesteController : Controller
                 }
             }
             var random = new Random();
-            entidade.Questoes = entidade.Questoes.OrderBy(q => random.Next()).ToList();
+            entidade.Questoes = entidade.Questoes.OrderBy(q => random.Next()).Take(entidade.QuantidadeQuestoes).ToList();
 
         }
 
         if (!entidade.EhRecuperacao)
         {
-            foreach(var m in entidade.Materia)
-            {
-                foreach (var q in m.Questoes)
+           
+                foreach (var q in entidade.Materia.Questoes)
                 {
                     entidade.Questoes.Add(q);
                 }
-            }
+            
 
             var random = new Random();
             entidade.Questoes = entidade.Questoes.OrderBy(q => random.Next()).ToList();
@@ -107,7 +106,7 @@ public class TesteController : Controller
             var transacao = contexto.Database.BeginTransaction();
 
         try
-        {
+        {   
             repositorioTeste.CadastrarRegistro(entidade);
             contexto.SaveChanges();
             transacao.Commit();
@@ -121,8 +120,34 @@ public class TesteController : Controller
         }
 
 
-        return RedirectToAction(nameof(Index));
+        return View(cadastrarVM);
     }
 
+    [HttpPost("cadastrarprimeiraetapa")]
+    [ValidateAntiForgeryToken]
+    public IActionResult CadastrarPrimeiraEtapa(CadastrarTesteViewModel cadastrarVM)
+    {
+        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
+        var disciplinasDisponiveis = repositorioDisciplina.SelecionarRegistros();
+
+        Disciplina Disciplina = new Disciplina();
+
+        foreach(var m in repositorioDisciplina.SelecionarRegistros())
+        {
+            if(cadastrarVM.DisciplinaId == m.Id)
+            {
+                Disciplina.Id = m.Id;
+                Disciplina.Nome = m.Nome;
+                Disciplina.Materias = m.Materias;
+            }
+        }
+
+        foreach(var s in Disciplina.Materias)
+        {
+            cadastrarVM.SeriesDisponiveis.Add(s.Serie.ToString());
+        }
+
+        return View(cadastrarVM);
+    }
 
 }

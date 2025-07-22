@@ -34,6 +34,7 @@ namespace Duobingo.WebApp.Extensions
             return new Teste(
                 formularioVM.Titulo,
                 disciplinaSelecionada,
+                formularioVM.QuantidadeQuestoes,
                 formularioVM.Serie
             );
         }

@@ -99,7 +99,7 @@ namespace Duobingo.WebApp.Model
         {
             Id = questao.Id;
             Enunciado = questao.Enunciado;
-            MateriaId = questao.MateriaId;
+            //MateriaId = questao.MateriaId;
             
             foreach (var a in questao.Alternativas)
             {

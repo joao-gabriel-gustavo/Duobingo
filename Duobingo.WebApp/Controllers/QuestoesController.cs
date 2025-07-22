@@ -155,7 +155,7 @@ public class QuestoesController : Controller
 
             questaoExistente.Enunciado = viewModel.Enunciado;
             questaoExistente.Materia = materia;
-            questaoExistente.MateriaId = materia.Id;
+           // questaoExistente.MateriaId = materia.Id;
 
             contexto.Alternativas.RemoveRange(questaoExistente.Alternativas);
             questaoExistente.Alternativas.Clear();

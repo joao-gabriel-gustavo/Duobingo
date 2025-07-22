@@ -24,8 +24,9 @@
                  builder.HasOne(t => t.Disciplina)
                     .WithMany(d => d.Materias);
 
-                builder.HasMany(t => t.Questoes)
-                 .WithOne(q => q.Materia);
+            builder.HasMany(t => t.Questoes)
+             .WithOne(q => q.Materia)
+            .HasForeignKey("MateriaId");
             }
-        }
+    }
     }

@@ -27,7 +27,7 @@ public class GeradorDePdfTeste
                     page.Content().Column(col =>
                     {
                         col.Item().Text("Opa");
-                        col.Item().Text("Outro texto aqui");
+                        
                     });
                 });
             })
@@ -47,7 +47,6 @@ public class GeradorDePdfTeste
             Console.WriteLine("Erro ao gerar ou abrir PDF:");
         }
 
-        Console.ReadKey();
     }
 
     public void GeradorPDFGabarito()
@@ -87,7 +86,6 @@ public class GeradorDePdfTeste
         {
             Console.WriteLine("Erro ao gerar ou abrir PDF:");
         }
-
-        Console.ReadKey();
+        
     }
 }

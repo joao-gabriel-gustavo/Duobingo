@@ -37,7 +37,7 @@ namespace Duobingo.InfraestruturaEmOrm.ModuloQuestoes
                 .Include(q => q.Materia)
                     .ThenInclude(m => m.Disciplina)
                 .Include(q => q.Alternativas)
-                .Where(q => q.MateriaId == materiaId)
+                //.Where(q => q.MateriaId == materiaId)
                 .ToList();
         }
 
