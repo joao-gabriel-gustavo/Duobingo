@@ -1,0 +1,27 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# User-specific files
+*.user
+launchSettings.json
+
+# Visual Studio
+.vs/
+.vscode/
+
+# JetBrains
+.idea/
+
+# Logs
+Logs/
+*.log
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Application-specific
+applicationhost.config 
