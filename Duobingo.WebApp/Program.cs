@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Duobingo.Dominio.ModuloMateria;
 using Duobingo.Dominio.ModuloTeste;
 using Duobingo.Dominio.ModuloQuestoes;
@@ -31,6 +32,12 @@ public class Program
         builder.Services.AddSerilogConfig(builder.Logging);
 
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<Duobingo.Infraestrutura.Orm.Compartilhado.duobingoDbContext>();
+            db.Database.Migrate();
+        }
 
         if (!app.Environment.IsDevelopment())
             app.UseExceptionHandler("/erro");
