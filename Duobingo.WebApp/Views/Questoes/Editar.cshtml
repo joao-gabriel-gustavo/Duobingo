@@ -12,7 +12,7 @@
             <input asp-for="Id" type="hidden" />
             
             <div class="card shadow">
-                <div class="card-header bg-warning text-dark">
+                <div class="card-header bg-success text-white">
                     <h5 class="mb-0">
                         <i class="bi bi-pencil-square"></i>
                         Editar Questão
@@ -20,15 +20,15 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <label asp-for="MateriaId" class="form-label">Matéria *</label>
-                        <select asp-for="MateriaId" class="form-select">
+                        <label asp-for="SelectedMateriaId" class="form-label">Matéria *</label>
+                        <select asp-for="SelectedMateriaId" class="form-select">
                             <option value="">Selecione uma matéria</option>
                             @foreach (var materia in Model.MateriasDisponiveis)
                             {
-                                <option value="@materia.Id" selected="@(materia.Id == Model.MateriaId)">@materia.Nome</option>
+                                <option value="@materia.Id" selected="@(materia.Id == Model.SelectedMateriaId)">@materia.Nome</option>
                             }
                         </select>
-                        <span asp-validation-for="MateriaId" class="text-danger"></span>
+                        <span asp-validation-for="SelectedMateriaId" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
@@ -43,19 +43,16 @@
                             @for (int i = 0; i < Model.Alternativas.Count; i++)
                             {
                                 <div class="alternativa-item mb-2" data-index="@i">
-                                    <div class="input-group">
+                                    <div class="input-group mb-3">
                                         <div class="input-group-text">
-                                            <input type="radio" name="AlternativaCorreta" value="@i" @(Model.Alternativas[i].EhCorreta ? "checked" : "") class="form-check-input mt-0" title="Marcar como resposta correta">
+                                            <input type="radio" name="AlternativaCorreta" value="@i" @(Model.Alternativas[i].Correta ? "checked" : "") class="form-check-input mt-0" title="Marcar como resposta correta">
                                         </div>
-                                        <input asp-for="@Model.Alternativas[i].Texto" class="form-control" placeholder="Digite a alternativa..." />
-                                        <input asp-for="@Model.Alternativas[i].Id" type="hidden" />
-                                        <input asp-for="@Model.Alternativas[i].EhCorreta" type="hidden" />
-                                        @if (i >= 2 || Model.Alternativas.Count > 2)
-                                        {
-                                            <button type="button" class="btn btn-outline-danger" onclick="removerAlternativa(this)">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        }
+                                        <input asp-for="@Model.Alternativas[i].Letra" class="form-control form-control-sm letra-input" placeholder="A" style="max-width: 60px;" readonly />
+                                        <input asp-for="@Model.Alternativas[i].Resposta" class="form-control" placeholder="Digite a alternativa..." />
+                                        <input asp-for="@Model.Alternativas[i].Correta" type="hidden" />
+                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="removerAlternativa(this)" title="Remover alternativa">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </div>
                                 </div>
                             }
@@ -94,6 +91,40 @@
     <script>
         let alternativaIndex = @Model.Alternativas.Count;
         
+        function gerarLetra(index) {
+            return String.fromCharCode(65 + index); // A=65, B=66, C=67, D=68
+        }
+        
+        function atualizarLetras() {
+            const alternativas = document.querySelectorAll('.alternativa-item');
+            alternativas.forEach((item, index) => {
+                const letraInput = item.querySelector('.letra-input');
+                letraInput.value = gerarLetra(index);
+            });
+        }
+        
+        function attachRadioListeners() {
+            document.querySelectorAll('input[name="AlternativaCorreta"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Marcar a alternativa selecionada como correta
+                        const index = this.value;
+                        const corretaInput = document.querySelector(`input[name="Alternativas[${index}].Correta"]`);
+                        if (corretaInput) {
+                            corretaInput.value = 'true';
+                        }
+                        
+                        // Desmarcar as outras alternativas
+                        document.querySelectorAll('input[name*=".Correta"]').forEach((input, idx) => {
+                            if (idx != index) {
+                                input.value = 'false';
+                            }
+                        });
+                    }
+                });
+            });
+        }
+        
         function atualizarBotaoAdicionar() {
             const btnAdicionar = document.getElementById('btnAdicionarAlternativa');
             if (btnAdicionar) {
@@ -114,18 +145,19 @@
                 }
                 
                 const container = document.getElementById('alternativas-container');
-                const newId = generateGuid();
+                const currentCount = document.querySelectorAll('.alternativa-item').length;
+                const newLetter = gerarLetra(currentCount);
                 
                 const alternativaHtml = `
-                    <div class="alternativa-item mb-2" data-index="${alternativaIndex}">
-                        <div class="input-group">
+                    <div class="alternativa-item mb-2" data-index="${currentCount}">
+                        <div class="input-group mb-3">
                             <div class="input-group-text">
-                                <input type="radio" name="AlternativaCorreta" value="${alternativaIndex}" class="form-check-input mt-0" title="Marcar como resposta correta">
+                                <input type="radio" name="AlternativaCorreta" value="${currentCount}" class="form-check-input mt-0" title="Marcar como resposta correta">
                             </div>
-                            <input name="Alternativas[${alternativaIndex}].Texto" class="form-control" placeholder="Digite a alternativa..." />
-                            <input name="Alternativas[${alternativaIndex}].Id" type="hidden" value="${newId}" />
-                            <input name="Alternativas[${alternativaIndex}].EhCorreta" type="hidden" value="false" />
-                            <button type="button" class="btn btn-outline-danger" onclick="removerAlternativa(this)">
+                            <input name="Alternativas[${currentCount}].Letra" class="form-control form-control-sm letra-input" value="${newLetter}" style="max-width: 60px;" readonly />
+                            <input name="Alternativas[${currentCount}].Resposta" class="form-control" placeholder="Digite a alternativa..." />
+                            <input name="Alternativas[${currentCount}].Correta" type="hidden" value="false" />
+                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="removerAlternativa(this)" title="Remover alternativa">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
@@ -133,7 +165,7 @@
                 `;
                 
                 container.insertAdjacentHTML('beforeend', alternativaHtml);
-                alternativaIndex++;
+                attachRadioListeners();
                 atualizarBotaoAdicionar();
             });
         }
@@ -155,69 +187,59 @@
             alternativas.forEach((item, index) => {
                 item.setAttribute('data-index', index);
                 
-                const radio = item.querySelector('input[type="radio"]');
-                radio.value = index;
+                const letraInput = item.querySelector('input[name*=".Letra"]');
+                const respostaInput = item.querySelector('input[name*=".Resposta"]');
+                const corretaInput = item.querySelector('input[name*=".Correta"]');
+                const radioButton = item.querySelector('input[type="radio"]');
                 
-                const textoInput = item.querySelector('input[name*=".Texto"]');
-                textoInput.name = `Alternativas[${index}].Texto`;
+                // Atualizar nomes dos inputs
+                letraInput.name = `Alternativas[${index}].Letra`;
+                respostaInput.name = `Alternativas[${index}].Resposta`;
+                corretaInput.name = `Alternativas[${index}].Correta`;
+                radioButton.value = index;
                 
-                const idInput = item.querySelector('input[name*=".Id"]');
-                idInput.name = `Alternativas[${index}].Id`;
-                
-                const corretaInput = item.querySelector('input[name*=".EhCorreta"]');
-                corretaInput.name = `Alternativas[${index}].EhCorreta`;
+                // Atualizar letra
+                letraInput.value = gerarLetra(index);
             });
-        }
-        
-        // Atualizar o valor EhCorreta quando radio button for selecionado
-        document.addEventListener('change', function(e) {
-            if (e.target.name === 'AlternativaCorreta') {
-                const alternativas = document.querySelectorAll('.alternativa-item');
-                alternativas.forEach((item, index) => {
-                    const corretaInput = item.querySelector('input[name*=".EhCorreta"]');
-                    corretaInput.value = (index == e.target.value) ? 'true' : 'false';
-                });
-            }
-        });
-        
-        function generateGuid() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                var r = Math.random() * 16 | 0,
-                    v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
+            
+            // Reattach event listeners after reindexing
+            attachRadioListeners();
         }
         
         // Validação antes do submit
         document.getElementById('formQuestao').addEventListener('submit', function(e) {
-            const alternativasComTexto = Array.from(document.querySelectorAll('input[name*=".Texto"]'))
+            const alternativasComResposta = Array.from(document.querySelectorAll('input[name*=".Resposta"]'))
                 .filter(input => input.value.trim() !== '');
-                
-            if (alternativasComTexto.length < 2) {
+
+            if (alternativasComResposta.length < 2) {
+                alert('Uma questão deve ter pelo menos 2 alternativas preenchidas.');
                 e.preventDefault();
-                alert('É necessário ter pelo menos 2 alternativas preenchidas.');
-                return;
+                return false;
             }
-            
-            const radioSelecionado = document.querySelector('input[name="AlternativaCorreta"]:checked');
-            if (!radioSelecionado) {
+
+            // Verificar se pelo menos uma alternativa está marcada como correta
+            const radioButtons = document.querySelectorAll('input[name="AlternativaCorreta"]:checked');
+            if (radioButtons.length === 0) {
+                alert('Marque pelo menos uma alternativa como correta.');
                 e.preventDefault();
-                alert('É necessário marcar uma alternativa como correta.');
-                return;
+                return false;
             }
-            
-            // Verificar se a alternativa marcada como correta tem texto
-            const indexCorreto = radioSelecionado.value;
-            const textoCorreto = document.querySelector(`input[name="Alternativas[${indexCorreto}].Texto"]`).value.trim();
-            if (textoCorreto === '') {
+
+            // Verificar se a alternativa marcada como correta tem resposta
+            const indexCorreto = radioButtons[0].value;
+            const respostaCorreta = document.querySelector(`input[name="Alternativas[${indexCorreto}].Resposta"]`).value.trim();
+            if (respostaCorreta === '') {
+                alert('A alternativa marcada como correta deve ter resposta preenchida.');
                 e.preventDefault();
-                alert('A alternativa marcada como correta deve ter texto preenchido.');
-                return;
+                return false;
             }
         });
         
-        // Inicializar
-        atualizarBotaoAdicionar();
+        // Inicializar na página carregada
+        document.addEventListener('DOMContentLoaded', function() {
+            atualizarLetras();
+            attachRadioListeners();
+            atualizarBotaoAdicionar();
+        });
     </script>
-} 
 } 

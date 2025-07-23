@@ -50,10 +50,9 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Serie")
-                        .IsRequired()
+                    b.Property<int>("Serie")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -67,13 +66,17 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("EhCorreta")
+                    b.Property<bool>("Correta")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Letra")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("QuestaoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Texto")
+                    b.Property<string>("Resposta")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -100,6 +103,9 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
 
                     b.Property<Guid?>("TesteId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("UtilizadaEmTeste")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -188,13 +194,13 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     b.HasOne("Duobingo.Dominio.ModuloDisciplina.Disciplina", "Disciplina")
                         .WithMany()
                         .HasForeignKey("DisciplinaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Duobingo.Dominio.ModuloMateria.Materia", "Materia")
-                        .WithMany()
+                        .WithMany("Testes")
                         .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Disciplina");
@@ -210,6 +216,8 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
             modelBuilder.Entity("Duobingo.Dominio.ModuloMateria.Materia", b =>
                 {
                     b.Navigation("Questoes");
+
+                    b.Navigation("Testes");
                 });
 
             modelBuilder.Entity("Duobingo.Dominio.ModuloQuestoes.Questoes", b =>

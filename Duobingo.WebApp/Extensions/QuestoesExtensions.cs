@@ -34,14 +34,14 @@ namespace Duobingo.WebApp.Extensions
             }
 
             // Adiciona as alternativas do view model
-            foreach (var altVM in viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Texto)))
+            foreach (var altVM in viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Resposta)))
             {
-                var alternativa = new Alternativa(altVM.Texto, altVM.EhCorreta)
+                var alternativa = new Alternativa(altVM.Letra, altVM.Resposta, altVM.Correta)
                 {
-                    Id = altVM.Id,
                     QuestaoId = questao.Id,
                     Questao = questao
                 };
+
                 questao.Alternativas.Add(alternativa);
             }
 

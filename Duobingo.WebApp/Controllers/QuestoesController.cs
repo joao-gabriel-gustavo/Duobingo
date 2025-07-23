@@ -38,7 +38,7 @@ public class QuestoesController : Controller
     }
 
     [HttpPost("cadastrar")]
-    public IActionResult Cadastrar(CadastrarQuestaoViewModel viewModel)
+    public async Task<IActionResult> Cadastrar(CadastrarQuestaoViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
@@ -49,10 +49,10 @@ public class QuestoesController : Controller
 
         try
         {
-            var materia = repositorioMateria.SelecionarRegistroPorId(viewModel.MateriaId);
+            var materia = repositorioMateria.SelecionarRegistroPorId(viewModel.SelectedMateriaId);
             if (materia == null)
             {
-                ModelState.AddModelError("MateriaId", "Matéria não encontrada.");
+                ModelState.AddModelError("SelectedMateriaId", "Matéria não encontrada.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
                 viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
@@ -62,27 +62,25 @@ public class QuestoesController : Controller
             
             var questao = new Questoes(materia, viewModel.Enunciado);
 
-            var alternativasComTexto = viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Texto)).ToList();
+            var alternativasComTexto = viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Resposta)).ToList();
             
             if (alternativasComTexto.Count < 2)
             {
                 ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos 2 alternativas.");
-                var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
+                await CarregarDadosComplementares(viewModel);
                 return View(viewModel);
             }
 
-            if (!alternativasComTexto.Any(a => a.EhCorreta))
+            if (!alternativasComTexto.Any(a => a.Correta))
             {
-                ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos uma alternativa correta.");
-                var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
+                ModelState.AddModelError("Alternativas", "Uma questão deve ter uma alternativa correta.");
+                await CarregarDadosComplementares(viewModel);
                 return View(viewModel);
             }
 
             foreach (var altVM in alternativasComTexto)
             {
-                questao.AdicionarAlternativa(altVM.Texto, altVM.EhCorreta);
+                questao.AdicionarAlternativa(altVM.Letra, altVM.Resposta, altVM.Correta);
             }
 
             repositorioQuestoes.CadastrarRegistro(questao);
@@ -101,19 +99,21 @@ public class QuestoesController : Controller
     }
 
     [HttpGet("editar/{id:guid}")]
-    public IActionResult Editar(Guid id)
+    public async Task<IActionResult> Editar(Guid id)
     {
         var questao = repositorioQuestoes.SelecionarRegistroPorId(id);
+
         if (questao == null)
             return NotFound();
 
-        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-        var editarVM = new EditarQuestaoViewModel(questao, materiasDisponiveis);
-        return View(editarVM);
+        var viewModel = new EditarQuestaoViewModel(questao);
+        await CarregarDadosComplementares(viewModel);
+
+        return View(viewModel);
     }
 
     [HttpPost("editar/{id:guid}")]
-    public IActionResult Editar(Guid id, EditarQuestaoViewModel viewModel)
+    public async Task<IActionResult> Editar(Guid id, EditarQuestaoViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
@@ -128,10 +128,10 @@ public class QuestoesController : Controller
             if (questaoExistente == null)
                 return NotFound();
 
-            var materia = repositorioMateria.SelecionarRegistroPorId(viewModel.MateriaId);
+            var materia = repositorioMateria.SelecionarRegistroPorId(viewModel.SelectedMateriaId);
             if (materia == null)
             {
-                ModelState.AddModelError("MateriaId", "Matéria não encontrada.");
+                ModelState.AddModelError("SelectedMateriaId", "Matéria não encontrada.");
                 var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
                 viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
                 return View(viewModel);
@@ -140,21 +140,19 @@ public class QuestoesController : Controller
             // Populate the Materia object in the ViewModel
             viewModel.Materia = materia;
 
-            var alternativasComTexto = viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Texto)).ToList();
+            var alternativasComTexto = viewModel.Alternativas.Where(a => !string.IsNullOrWhiteSpace(a.Resposta)).ToList();
             
             if (alternativasComTexto.Count < 2)
             {
                 ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos 2 alternativas.");
-                var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
+                await CarregarDadosComplementares(viewModel);
                 return View(viewModel);
             }
 
-            if (!alternativasComTexto.Any(a => a.EhCorreta))
+            if (!alternativasComTexto.Any(a => a.Correta))
             {
-                ModelState.AddModelError("Alternativas", "Uma questão deve ter pelo menos uma alternativa correta.");
-                var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
-                viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
+                ModelState.AddModelError("Alternativas", "Uma questão deve ter uma alternativa correta.");
+                await CarregarDadosComplementares(viewModel);
                 return View(viewModel);
             }
 
@@ -166,7 +164,7 @@ public class QuestoesController : Controller
 
             foreach (var altVM in alternativasComTexto)
             {
-                var alternativa = new Alternativa(altVM.Texto, altVM.EhCorreta)
+                var alternativa = new Alternativa(altVM.Letra, altVM.Resposta, altVM.Correta)
                 {
                     QuestaoId = questaoExistente.Id,
                     Questao = questaoExistente
@@ -236,5 +234,11 @@ public class QuestoesController : Controller
 
         var detalhesVM = questao.ParaDetalhesVM();
         return View(detalhesVM);
+    }
+
+    private async Task CarregarDadosComplementares(FormularioQuestoesViewModel viewModel)
+    {
+        var materiasDisponiveis = repositorioMateria.SelecionarRegistros();
+        viewModel.MateriasDisponiveis = materiasDisponiveis.Select(m => new DetalhesMateriaTesteViewModel(m.Id, m.Nome)).ToList();
     }
 } 

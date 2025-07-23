@@ -9,7 +9,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-8 col-xl-7">
         <div class="card shadow">
-            <div class="card-header bg-info text-white">
+            <div class="card-header bg-success text-white">
                 <h5 class="mb-0">
                     <i class="bi bi-question-circle"></i>
                     Detalhes da Questão
@@ -38,22 +38,19 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">Alternativas:</label>
                     <div class="row">
-                        @for (int i = 0; i < Model.Alternativas.Count; i++)
+                        @foreach (var alternativa in Model.Alternativas)
                         {
-                            var alternativa = Model.Alternativas[i];
-                            var letra = char.ConvertFromUtf32(65 + i); // A, B, C, D
-                            
-                            <div class="col-12 mb-2">
-                                <div class="card @(alternativa.EhCorreta ? "border-success" : "border-secondary")">
-                                    <div class="card-body py-2 @(alternativa.EhCorreta ? "bg-success bg-opacity-10" : "")">
-                                        <div class="d-flex align-items-center">
-                                            <span class="badge @(alternativa.EhCorreta ? "bg-success" : "bg-secondary") me-2">@letra</span>
-                                            <span class="@(alternativa.EhCorreta ? "fw-bold" : "")">@alternativa.Texto</span>
-                                            @if (alternativa.EhCorreta)
-                                            {
-                                                <i class="bi bi-check-circle-fill text-success ms-auto"></i>
-                                            }
-                                        </div>
+                            char letra = (char)('A' + Model.Alternativas.IndexOf(alternativa));
+
+                            <div class="col-12 col-md-6 mb-2">
+                                <div class="card @(alternativa.Correta ? "border-success" : "border-secondary")">
+                                    <div class="card-body py-2 @(alternativa.Correta ? "bg-success bg-opacity-10" : "")">
+                                        <span class="badge @(alternativa.Correta ? "bg-success" : "bg-secondary") me-2">@alternativa.Letra</span>
+                                        <span class="@(alternativa.Correta ? "fw-bold" : "")">@alternativa.Resposta</span>
+                                        @if (alternativa.Correta)
+                                        {
+                                            <i class="bi bi-check-circle-fill text-success float-end"></i>
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -17,14 +17,14 @@ namespace Duobingo.InfraestruturaEmOrm.ModuloQuestoes
                 .HasMaxLength(500);
 
             builder.Property(q => q.UtilizadaEmTeste)
-                .IsRequired()
+                .IsRequired();
 
             builder.HasOne(q => q.Materia)
                 .WithMany(m => m.Questoes)
                 .IsRequired();
 
             builder.HasMany(q => q.Alternativas)
-                .WithOne(a => a.Questao)
+                .WithOne(a => a.Questao);
         }
     }
 } 

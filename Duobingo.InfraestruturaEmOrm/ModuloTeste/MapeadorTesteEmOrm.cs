@@ -18,10 +18,14 @@ namespace Duobingo.Infraestrutura.Orm.ModuloTeste
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.HasOne(t => t.Disciplina)
+                .WithMany();
 
-            builder.HasOne(t => t.Materia);
+            builder.HasOne(t => t.Materia)
+                .WithMany(m => m.Testes);
 
-            builder.HasMany(t => t.Questoes);
+            builder.HasMany(t => t.Questoes)
+                .WithOne();
 
             builder.Property(t => t.Serie)
                 .IsRequired()

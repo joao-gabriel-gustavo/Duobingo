@@ -15,7 +15,8 @@ namespace Duobingo.WebApp.Extensions
 
         public static DetalhesMateriaViewModel ParaDetalhes(this Materia materia)
         {
-            return new DetalhesMateriaViewModel(materia.Id, materia.Nome, materia.Serie, materia.Disciplina.Nome);
+            var disciplinaNome = materia.Disciplina?.Nome ?? "Disciplina não encontrada";
+            return new DetalhesMateriaViewModel(materia.Id, materia.Nome, materia.Serie, disciplinaNome);
         }
     }
 

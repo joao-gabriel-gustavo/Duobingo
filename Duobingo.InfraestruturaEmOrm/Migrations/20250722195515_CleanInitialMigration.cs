@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Duobingo.InfraestruturaEmOrm.Migrations
 {
     /// <inheritdoc />
-    public partial class Add_MigracaoCompleta : Migration
+    public partial class CleanInitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,8 +29,8 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DisciplinaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Serie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Serie = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    DisciplinaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,33 +44,32 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                 });
 
             migrationBuilder.CreateTable(
-       name: "Testes",
-       columns: table => new
-       {
-           Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-           Titulo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-           DisciplinaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-           MateriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-           Serie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-           QuantidadeQuestoes = table.Column<int>(type: "int", nullable: false),
-           EhRecuperacao = table.Column<bool>(type: "bit", nullable: false)
-       },
-       constraints: table =>
-       {
-           table.PrimaryKey("PK_Testes", x => x.Id);
-           table.ForeignKey(
-               name: "FK_Testes_Disciplinas_DisciplinaId",
-               column: x => x.DisciplinaId,
-               principalTable: "Disciplinas",
-               principalColumn: "Id",
-               onDelete: ReferentialAction.Cascade);
-           table.ForeignKey(
-               name: "FK_Testes_Materias_MateriaId",
-               column: x => x.MateriaId,
-               principalTable: "Materias",
-               principalColumn: "Id",
-               onDelete: ReferentialAction.Restrict);
-       });
+                name: "Testes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Titulo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DisciplinaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MateriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Serie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    QuantidadeQuestoes = table.Column<int>(type: "int", nullable: false),
+                    EhRecuperacao = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Testes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Testes_Disciplinas_DisciplinaId",
+                        column: x => x.DisciplinaId,
+                        principalTable: "Disciplinas",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Testes_Materias_MateriaId",
+                        column: x => x.MateriaId,
+                        principalTable: "Materias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Questoes",
@@ -79,6 +78,7 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MateriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Enunciado = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    UtilizadaEmTeste = table.Column<bool>(type: "bit", nullable: false),
                     TesteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -102,8 +102,9 @@ namespace Duobingo.InfraestruturaEmOrm.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Texto = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    EhCorreta = table.Column<bool>(type: "bit", nullable: false),
+                    Letra = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Resposta = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Correta = table.Column<bool>(type: "bit", nullable: false),
                     QuestaoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

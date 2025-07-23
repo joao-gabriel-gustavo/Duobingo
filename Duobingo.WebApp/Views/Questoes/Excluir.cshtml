@@ -35,17 +35,16 @@
                     <ul class="list-group">
                         @foreach (var alternativa in Model.Alternativas)
                         {
-                            <li class="list-group-item @(alternativa.EhCorreta ? "list-group-item-success" : "")">
-                                @if (alternativa.EhCorreta)
+                            <li class="list-group-item @(alternativa.Correta ? "list-group-item-success" : "")">
+                                @if (alternativa.Correta)
                                 {
                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    <strong>@alternativa.Texto</strong>
-                                    <span class="badge bg-success ms-2">Resposta Correta</span>
+                                    <strong>@alternativa.Letra@(": ")@alternativa.Resposta</strong>
                                 }
                                 else
                                 {
                                     <i class="bi bi-circle me-2"></i>
-                                    @alternativa.Texto
+                                    @alternativa.Letra@(": ")@alternativa.Resposta
                                 }
                             </li>
                         }

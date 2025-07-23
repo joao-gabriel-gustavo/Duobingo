@@ -8,8 +8,8 @@ namespace Duobingo.WebApp.Model
     public class FormularioQuestoesViewModel
     {
         public Guid Id { get; set; }
-        public string Enunciado { get; set; }
-        public Guid MateriaId { get; set; } 
+        public string Enunciado { get; set; } = string.Empty;
+        public Guid SelectedMateriaId { get; set; }
         public Materia? Materia { get; set; }
         public List<DetalhesAlternativaViewModel> Alternativas { get; set; }
         public List<DetalhesMateriaTesteViewModel> MateriasDisponiveis { get; set; }
@@ -37,37 +37,52 @@ namespace Duobingo.WebApp.Model
     public class DetalhesQuestaoViewModel
     {
         public Guid Id { get; set; }
-        public string Enunciado { get; set; }
-        public DetalhesMateriaTesteViewModel Materia { get; set; }
+        public string Enunciado { get; set; } = string.Empty;
+        public DetalhesMateriaTesteViewModel Materia { get; set; } = null!;
         public List<DetalhesAlternativaViewModel> Alternativas { get; set; }
-        public string RespostaCorreta { get; set; }
+        public string RespostaCorreta { get; set; } = string.Empty;
 
-        public DetalhesQuestaoViewModel(Guid id, string enunciado, Materia materia, List<Alternativa> alternativas)
+        public DetalhesQuestaoViewModel()
+        {
+            Alternativas = new List<DetalhesAlternativaViewModel>();
+        }
+
+        public DetalhesQuestaoViewModel(Guid id, string enunciado, Materia materia, List<Alternativa> alternativas) : this()
         {
             Id = id;
             Enunciado = enunciado;
             Materia = new DetalhesMateriaTesteViewModel(materia.Id, materia.Nome);
-            Alternativas = alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Texto, a.EhCorreta)).ToList();
-            RespostaCorreta = alternativas.FirstOrDefault(a => a.EhCorreta)?.Texto ?? "Não definida";
+            Alternativas = alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Letra, a.Resposta, a.Correta)).ToList();
+            RespostaCorreta = alternativas.FirstOrDefault(a => a.Correta)?.Resposta ?? "Não definida";
+        }
+
+        public DetalhesQuestaoViewModel(Questoes questao) : this()
+        {
+            Id = questao.Id;
+            Enunciado = questao.Enunciado;
+            Materia = new DetalhesMateriaTesteViewModel(questao.Materia.Id, questao.Materia.Nome);
+
+            var alternativas = questao.Alternativas.ToList();
+            Alternativas = alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Letra, a.Resposta, a.Correta)).ToList();
+            RespostaCorreta = alternativas.FirstOrDefault(a => a.Correta)?.Resposta ?? "Não definida";
         }
     }
 
     public class DetalhesAlternativaViewModel
     {
         public Guid Id { get; set; }
-        public string Texto { get; set; }
-        public bool EhCorreta { get; set; }
+        public string Letra { get; set; } = string.Empty;
+        public string Resposta { get; set; } = string.Empty;
+        public bool Correta { get; set; }
 
-        public DetalhesAlternativaViewModel()
-        {
-            Id = Guid.NewGuid();
-        }
+        public DetalhesAlternativaViewModel() { }
 
-        public DetalhesAlternativaViewModel(Guid id, string texto, bool ehCorreta) : this()
+        public DetalhesAlternativaViewModel(Guid id, string letra, string resposta, bool correta) : this()
         {
             Id = id;
-            Texto = texto;
-            EhCorreta = ehCorreta;
+            Letra = letra;
+            Resposta = resposta;
+            Correta = correta;
         }
     }
 
@@ -96,22 +111,19 @@ namespace Duobingo.WebApp.Model
         {
         }
 
-        public EditarQuestaoViewModel(Questoes questao, List<Materia> materias) : this()
+        public EditarQuestaoViewModel(Questoes questao) : this()
         {
             Id = questao.Id;
-            Enunciado = questao.Enunciado;
-            MateriaId = questao.Materia?.Id ?? Guid.Empty;
             Materia = questao.Materia;
-            
-            foreach (var a in questao.Alternativas)
-            {
-                Alternativas.Add(new DetalhesAlternativaViewModel(a.Id, a.Texto, a.EhCorreta));
-            }
+            SelectedMateriaId = questao.Materia.Id;
+            Enunciado = questao.Enunciado;
 
-            foreach (var m in materias)
+            Alternativas = questao.Alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Letra, a.Resposta, a.Correta)).ToList();
+
+            // Adicionar alternativas vazias para completar 4
+            while (Alternativas.Count < 4)
             {
-                var materiaVM = new DetalhesMateriaTesteViewModel(m.Id, m.Nome);
-                MateriasDisponiveis.Add(materiaVM);
+                Alternativas.Add(new DetalhesAlternativaViewModel());
             }
         }
     }
@@ -130,7 +142,7 @@ namespace Duobingo.WebApp.Model
             Enunciado = questao.Enunciado;
             NomeMateria = questao.Materia?.Nome ?? "Não informada";
             RespostaCorreta = questao.ObterRespostaCorreta();
-            Alternativas = questao.Alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Texto, a.EhCorreta)).ToList();
+            Alternativas = questao.Alternativas.Select(a => new DetalhesAlternativaViewModel(a.Id, a.Letra, a.Resposta, a.Correta)).ToList();
         }
     }
 } 
